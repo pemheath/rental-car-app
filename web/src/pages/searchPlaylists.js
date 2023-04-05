@@ -29,13 +29,14 @@ class SearchPlaylists extends BindingClass {
     constructor() {
         super();
 
+        // all of the functions for this class will be in this array
         this.bindClassMethods(['mount', 'search', 'displaySearchResults', 'getHTMLForSearchResults'], this);
 
         // Create a enw datastore with an initial "empty" state.
         this.dataStore = new DataStore(EMPTY_DATASTORE_STATE);
         this.header = new Header(this.dataStore);
         this.dataStore.addChangeListener(this.displaySearchResults);
-        console.log("searchPlaylists constructor");
+        console.log("searchPlaylists constructor"); //system.out.println in javascript
     }
 
     /**
@@ -132,10 +133,11 @@ class SearchPlaylists extends BindingClass {
 
 /**
  * Main method to run when the page contents have loaded.
+ //instantiate our class, call the mount function on our playlist.
  */
 const main = async () => {
     const searchPlaylists = new SearchPlaylists();
     searchPlaylists.mount();
 };
 
-window.addEventListener('DOMContentLoaded', main);
+window.addEventListener('DOMContentLoaded', main); //this is what kicks off the whole thing
