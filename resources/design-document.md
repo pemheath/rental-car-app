@@ -14,6 +14,10 @@ It is designed to allow a company to view, add, update, remove, and check-out ca
 - With respect to this project, a "user" is an owner or employee of a car rental agency 
 - A "client" is a customer of that business, who will be served by the business but  never interact with this application.
 - The "business" is a small scale, single location car rental company. 
+- For this project, a "car" is an vehicle in our inventory of rental vehicles. While we will have some "trucks" and "vans", we will refer to all vehicles as cars (who calls it a vehicle rental company?).
+- For the sake of this project, anyone with the link to our website can view inventory, but in order to modify anything the user must be logged in to an account. 
+- We will not concern ourselves with verifying that a user making an account is actually an employee, but this would need to be addressed for security.
+- In other words, we will assume that anyone with access to the application is allowed to access all of its functionality.
 
 ## 2. Top Questions to Resolve in Review
 
@@ -21,7 +25,8 @@ _List the most important questions you have about your design, or things that yo
 
 1. How will we uniquely identify our vehicles? (ie, what will the key structure be for the table) - assign a unique ID to every piece of inventory [UUID] --> the user will not need to care about this
 2. What queries will I need to perform as a user? 
-3. 
+3. What should the main page contain? Should the main page be populated with a list of cars available in inventory when the application is opened, or should the main page have a menu of options for the user to select an action (what do they want to do?).
+4. Do we need to worry about people who are not our customer trying to create an account? Is there anything in the log in process to prohibit a random person from creating an account and manipulating inventory.
 
 ## 3. Use Cases
 
@@ -53,8 +58,6 @@ U12.As a [rental car management service] customer, Determine who is renting a sp
 
 
 
-
-
 ## 4. Project Scope
 
 ### 4.1. In Scope
@@ -75,25 +78,85 @@ Extending the scope to include rental car customer facing functionality is beyon
 
 - []  Operating with multiple locations and the ability to do one way car rentals
 - []  Offering a car-customer facing side of the service
+- []  We will not concern ourselves with verifying that a user making an account is actually an employee, but this would need to be addressed for security.
+- []  For this project, we are assuming access = permission. 
+- []  For this project, we will assume that the driver's license will not change. Should it change, the fix would need to be manual by an engineer in the database.
+
 
 
 # 5. Proposed Architecture Overview
 
-_Describe broadly how you are proposing to solve for the requirements you described in Section 2. This may include class diagram(s) showing what components you are planning to build. You should argue why this architecture (organization of components) is reasonable. That is, why it represents a good data flow and a good separation of concerns. Where applicable, argue why this architecture satisfies the stated requirements._
+This initial iteration will provide the minimum viable product  (MVP) including adding and removing vehicles from inventory, as well as renting and returning vehicles and viewing available inventory.
+
+We will use API Gateway and Lambda to create five endpoints (`ViewInventory`,  `AddVehicle`, `RentVehcile`, `ReturnVehicle`, `RemoveVehicle`) that will handle the addition, removal, renting, and returning of vehicles to our rental car inventory. 
+
+We will store the inventory in a table of Cars in DynamoDB. We will also store customers and transactions in respective tables in DynamoDB.
+
+What Wheels are Where will also provide a web interface for users to manage and view their inventory. We will use Cognito to authenticate users. 
+
+We will have a main page that populates with a list view of all available cars and a links to pages to manage/rent/return cars.
 
 # 6. API
 
 ## 6.1. Public Models
 
-_Define the data models your service will expose in its responses via your *`-Model`* package. These will be equivalent to the *`PlaylistModel`* and *`SongModel`* from the Unit 3 project._
+```
+//Cars
 
-## 6.2. _First Endpoint_
+Integer VIN; (parti†ion key) 
+String make;
+String model;
+ENUM classOfVehicle;
+BigDecimal costPerDay;
+ENUM status;
+Integer year;
+Integer capacity; 
 
-_Describe the behavior of the first endpoint you will build into your service API. This should include what data it requires, what data it returns, and how it will handle any known failure cases. You should also include a sequence diagram showing how a user interaction goes from user to website to service to database, and back. This first endpoint can serve as a template for subsequent endpoints. (If there is a significant difference on a subsequent endpoint, review that with your team before building it!)_
+//GSI for Cars? (we are going to want to be able to search cars by status, class)
 
-_(You should have a separate section for each of the endpoints you are expecting to build...)_
+```
 
-## 6.3 _Second Endpoint_
+```
+//Clients
+
+String driversLicenseNumber; (partion key)
+String clientName;
+Transaction currentTransaction;
+List<Transaction> historyOfTransactions;
+
+```
+
+```
+//Transactions
+
+String transactionId; (range/sort key)
+Car carRented;
+Client client; (hash/partion key)
+ZonedDateTime dateOut;
+ZonedDateTime dateIn;
+BigDecimal totalCost;
+Boolean active;
+
+
+
+```
+
+
+
+## 6.2. `ViewInventory` 
+
+* Accepts `GET` requests to `/playlists/:id`
+* Accepts a playlist ID and returns the corresponding PlaylistModel.
+    * If the given playlist ID is not found, will throw a
+      `PlaylistNotFoundException`
+
+## 6.3  `AddCar`
+
+## 6.4  `RentCar`
+
+## 6.5  `ReturnCar`
+
+## 6.6  `RemoveCar`
 
 _(repeat, but you can use shorthand here, indicating what is different, likely primarily the data in/out and error conditions. If the sequence diagram is nearly identical, you can say in a few words how it is the same/different from the first endpoint)_
 
