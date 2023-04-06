@@ -103,16 +103,19 @@ We will have a main page that populates with a list view of all available cars a
 ```
 //Cars
 
-Integer VIN; (parti†ion key) 
+String VIN; (sort key) 
 String make;
 String model;
-ENUM classOfVehicle;
+ENUM classOfVehicle; (partition key)
 BigDecimal costPerDay;
 ENUM status;
 Integer year;
 Integer capacity; 
 
-//GSI for Cars? (we are going to want to be able to search cars by status, class)
+//GSI for Cars? (we are going to want to be able to search cars by status, class) 
+QUESTION - if viewing all available cars is our major use case, how do we support this without using a scan?
+given that our data will be relatively small (ie, limited by how many vehicles the lot holds), I think we would be okay to scan. I don't see an easy way to 
+accomplish this use case with a query because status does not make sense as a partition key!
 
 ```
 
@@ -130,8 +133,8 @@ List<Transaction> historyOfTransactions;
 //Transactions
 
 String transactionId; (range/sort key)
-Car carRented;
-Client client; (hash/partion key)
+Car carRented; (hash/partion key) [to support use case 12]
+Client client; 
 ZonedDateTime dateOut;
 ZonedDateTime dateIn;
 BigDecimal totalCost;
