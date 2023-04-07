@@ -15,7 +15,7 @@ It is designed to allow a company to view, add, update, remove, and check-out ca
 - A "client" is a customer of that business, who will be served by the business but  never interact with this application.
 - The "business" is a small scale, single location car rental company. 
 - For this project, a "car" is an vehicle in our inventory of rental vehicles. While we will have some "trucks" and "vans", we will refer to all vehicles as cars (who calls it a vehicle rental company?).
-- For the sake of this project, anyone with the link to our website can view inventory, but in order to modify anything the user must be logged in to an account. 
+- For the sake of this project, anyone with the link to our website has read access to inventory, but in order to have write access, the user must be logged in to an account. 
 - We will not concern ourselves with verifying that a user making an account is actually an employee, but this would need to be addressed for security.
 - In other words, we will assume that anyone with access to the application is allowed to access all of its functionality.
 
@@ -42,13 +42,13 @@ U4. As a [rental car management service] customer, I want to mark a car as avail
 
 U5. As a [rental car management service] customer, I want to view all available cars.
 
-U6. As a [rental car management service] customer, I want to View a subset of all cars by filtering based on status, capacity, and class.
-
-U7. As a [rental car management service] customer, I want to Flag a car from for maintenance or repairs  (available, rented, broke).
-
 U8. As a [rental car management service] customer, I want to Check a car back in and calculate cost to charger customer based on length of rental.
 
+U6. As a [rental car management service] customer, I want to View a subset of all cars by filtering based on status, capacity, and class.
+
 U9. As a [rental car management service] customer, Update a car's status as it moves from rented to under-prep to available back to rented.
+
+U7. As a [rental car management service] customer, I want to Flag a car from for maintenance or repairs  (available, rented, broke).
 
 U10. As a [rental car management service] customer, View level of gas the car checks in and out with.
 
@@ -101,69 +101,159 @@ We will have a main page that populates with a list view of all available cars a
 ## 6.1. Public Models
 
 ```
-//Cars
+//Cars (model)
 
-Integer VIN; (parti†ion key) 
-String make;
+String VIN; 
+String make; 
 String model;
-ENUM classOfVehicle;
+ENUM classOfVehicle; 
 BigDecimal costPerDay;
-ENUM status;
-Integer year;
+ENUM availability;
+Integer year; 
 Integer capacity; 
 
-//GSI for Cars? (we are going to want to be able to search cars by status, class)
-
 ```
 
-```
-//Clients
 
-String driversLicenseNumber; (partion key)
-String clientName;
-Transaction currentTransaction;
-List<Transaction> historyOfTransactions;
+```
+//ClientModel (will not a dynamodb table)
+
+String licenseNumber;
+String name;
+String email;
+String phoneNumber;
+
 
 ```
 
 ```
 //Transactions
 
-String transactionId; (range/sort key)
-Car carRented;
-Client client; (hash/partion key)
+String clientId; partition key
+String transactionId; sort key
+Client client;
+String VIN;
+BigDecimal costPerDay;   
 ZonedDateTime dateOut;
 ZonedDateTime dateIn;
 BigDecimal totalCost;
 Boolean active;
 
+```
 
+### 6.2. `ViewAvailableInventory` 
+
+* Accepts `GET` requests to `/availableInventory`
+* By default returns all inventory marked as available by querying the GSI. (associated with Use Case 5)
+* _This next version of the endpoint is associated with stretch user story US 6_ 
+* 6.2.stretch: Accepts an optional class parameter, class. If optional parameter, the API will return the subset of available cars of that type.
+  * If the class provided does not match any provided types, a `VehicleClassNotSupported` exception will be thrown, resulting in a 400 error. We hope to avoid this by 
+  * utilizing a dropdown menu on the front end to limit class choice.
+  
+### 6.2.b `ViewCar`
+
+* Accepts `GET` requests to `/car/:vin`
+* Accepts a VIN and returns the corresponding car model.
+  * We will validate that the provided VIN is 17 characters and does not include illegal characters.
+  * If the VIN is not validated, will throw an `InvalidVINException` (400 exception)
+      * If the given VIN is valid but is not found, will throw a
+        `CarNotFoundException` (404 exception)
+
+### 6.3  `AddCar`
+* Accepts `POST` requests to `/car`
+* Accepts data to create a new car with a provided VIN, make, model, capacity, year, class of vehicle, cost per day. Availability will defaulst to "available".
+* Return the newly generated car model.
+* We will validate that the provided VIN is 17 characters and does not include illegal characters.
+  * If the VIN is not validated, will throw an `InvalidVINException` (400 exception)
+  * If the VIN is valid but already in the database, will through a `DuplicateInventoryItemException` ()
+
+
+
+### 6.4a  `UpdateCar`
+* Accepts `PUT` requests to `/car/:vin`. 
+* Accepts data to update the status or cost of a car.
+* Returns the updated car model.
+  * If the VIN is not validated, will throw an `InvalidVINException`
+      * If the given VIN is valid but is not found, will throw a
+        `CarNotFoundException`
+
+### 6.4b  `CreateTransaction`
+* Accepts `POST` requests to `/transac†ions`.
+* Accepts data to create a new transaction:
+  Including client Id, VIN, All other parameters are optional, or set, by default, to: 
+* isActive = true
+* dateOut = current local date
+* costPerDay is retrieved from the car object accessed by the vin
+* dateIn, totalCost are left empty
+* returns newly created transaction
+*   * If the VIN is not validated, will throw an `InvalidVINException`
+    * If the given VIN is valid but is not found, will throw a
+      `CarNotFoundException`
+    * If the client ID does not match the required format, will throw an `InvalidIDException`
+
+
+### 6.5a  `UpdateTransaction`
+* Accepts `PUT` requests to `/transactions/:id/transactionId`. **QUESTION! What would this endpoint be?
+* Accept customerID and transaction ID.
+* Sets dateIn to current date/time; sets isActive to false;
+* Returns updated transaction
+*   * If the VIN is not validated, will throw an `InvalidIDException`
+    * If the given VIN is valid but is not found, will throw a
+      `CarNotFoundException`
+
+
+
+## 6.6  `RemoveCar`
+
+* Accepts `DELETE` requests to `/car/:vin`. 
+* Returns a boolean (true if car was successfully deleted, false if car was not in inventory or not successfully deleted)
+* We will validate that the provided VIN is 17 characters and does not include illegal characters.
+    * If the VIN is not validated, will throw an `InvalidVINException`
+
+# 7. Tables
+
+```
+//Transactions (a model and a table)
+
+String clientId; partition key
+String transactionId; sort key
+Client client;
+String VIN;
+BigDecimal costPerDay;   
+ZonedDateTime dateOut;
+ZonedDateTime dateIn;
+BigDecimal totalCost;
+Boolean active;
+
+GSI//
+ 
+ AvailabilityClassIndex
+ 
+ The power of this index is to answer the question "What cars are available?" and "What sedans are available? or What SUVs are available?"
+ We can then query specific cars from the base table by specifying the VIN.
+ 
+ availability ENUM partition key;
+ classOfVehicle ENUM sort key;
+ VIN  string;
+//Cars (a model and a table)
+String VIN; (partition key) 
+String make; 
+String model;
+ENUM classOfVehicle; 
+BigDecimal costPerDay;
+ENUM availability;
+Integer year; 
+Integer capacity; 
 
 ```
 
 
 
-## 6.2. `ViewInventory` 
-
-* Accepts `GET` requests to `/playlists/:id`
-* Accepts a playlist ID and returns the corresponding PlaylistModel.
-    * If the given playlist ID is not found, will throw a
-      `PlaylistNotFoundException`
-
-## 6.3  `AddCar`
-
-## 6.4  `RentCar`
-
-## 6.5  `ReturnCar`
-
-## 6.6  `RemoveCar`
-
-_(repeat, but you can use shorthand here, indicating what is different, likely primarily the data in/out and error conditions. If the sequence diagram is nearly identical, you can say in a few words how it is the same/different from the first endpoint)_
-
-# 7. Tables
-
-_Define the DynamoDB tables you will need for the data your service will use. It may be helpful to first think of what objects your service will need, then translate that to a table structure, like with the *`Playlist` POJO* versus the `playlists` table in the Unit 3 project._
-
 # 8. Pages
+![The home page will automatically show a list of inventory, and give the user the chance to sign in.](../../../../Downloads/WireFrames/IMG_1477 Small.png)
 
-_Include mock-ups of the web pages you expect to build. These can be as sophisticated as mockups/wireframes using drawing software, or as simple as hand-drawn pictures that represent the key customer-facing components of the pages. It should be clear what the interactions will be on the page, especially where customers enter and submit data. You may want to accompany the mockups with some description of behaviors of the page (e.g. “When customer submits the submit-dog-photo button, the customer is sent to the doggie detail page”)_
+![Once the user has signed in they can choose to manage reservations or manage inventory.](../../../../Downloads/WireFrames/IMG_1476 Small.png)
+
+![](../../../../Downloads/WireFrames/IMG_1478 Small.png)
+
+![](../../../../Downloads/WireFrames/IMG_1479 Small.png)

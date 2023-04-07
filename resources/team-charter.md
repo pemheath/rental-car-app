@@ -26,43 +26,50 @@ The following guide might be helpful as you work through your teams charter:
 
 ### Team Members
 
-- _Team Member A_
-- _Team Member B_
-- _Team Member C_
-- _Team Member D_
+- Kaden Cannon aka Honor
+- Frazier Dyson aka goose 
+- Muddather Babiker aka hawngry
+- Pemberton Heath aka sarge
 
 ### Psychological safety
 
-* **How can we take risks on this team without feeling insecure or embarrassed?**
-  _E.g., Be open to opinions that differ from your own, actively ask for opinions from each member of the team, do not interrupt each other, don’t place blame, all suggestions or questions are encouraged, listened to, considered equally, and never judged_
-
+* **How can we take risks on this team without feeling insecure or embarrassed?** 
+ Listen, don't be afraid to put an idea out there, listen and consider ideas before jumping on them. 
+  
 * **How do we address situations where any team member feels unsafe?**
-  _E.g., communicate when there is a misunderstanding, don’t move forward until the situation is resolved, directly address and resolve negativity, give and receive feedback with a positive, strength-building mindset, if necessary, escalate to an instructor 
-
+* If you comfortable to voice your discomfort in the moment, go for it. If you are not comfortable, the morning standup is understood as another venue where anyone is welcome to share
+* any situation that may have made them uncomfortable. If someone shares during that standup, it is a neutral space where experiences are validated without being contested. 
+* We can then set aside a time (present or later) to address the resolution.
+  
+  
 ### Dependability, Structure, Clarity
 
 * **How can we count on each other to do high quality work on time?**
-  _E.g., estimate task size, break down large tasks, call out tasks at risk early, ask each other for help, how to ensure timely code reviews, how to share knowledge, help each other hold accountability give frequent, scheduled updates_
+* 
+* If we are stuck, the culture on our team is to ask questions of each other. Recognize when you have exhausted a couple of available resources, ask your teammates.
 
 * **How do we address missed deadlines?**
-  _E.g., acknowledge, but don’t punish slipped dates, figure out what went wrong, identify lessons for future_
+ Do a postmortem as a group to figure out how we miscalculated the approximate time. 
+ 
+
 
 * **How can we make goals, roles, and execution plans on our team clear?**
-  _E.g., where to track goals and when to review them, use definitive, quantifiable terminology, include clear background on why this goal is necessary, include “done” criteria for the goal (code is pushed with integration tests, document is reviewed, etc.)_
-
-
+* 
+ Keep github tasks up to date and communicate regularly with each other as to what we are each doing. 
 ### Goals
 
 * **Overall: What is our overall objective for the Learn & Be Curious unit?**
-  _E.g., “Apply what we’ve learned throughout this program in a team project to prepare ourselves for internships and full-time SDE roles.”_
+  _“Apply what we’ve learned throughout this program in a team project to prepare ourselves for internships and full-time SDE roles.”_
 
 
 * **Performance: What do we want to prioritize in terms of what we achieve?**
-  _What will be true when you have 'succeeded' on this project? E.g. enjoy ourselves, maintain our energy to the end, ensure all team members participate, create professional connections, exceed instructor expectations, efficiently pace the project so we’re not rushing at the end, etc._
+  _Positive team culture throughout! MVP functional by the end of the project, enjoy ourselves, maintain our energy to the end, 
+ensure all team members participate, create professional connections, 
+exceed Jody's expectations, learn and experience the scrum framework in building a project together_
 
 
 * **Learning: What are the things that our team wants to learn?**
-  _E.g., develop SDE knowledge, enhance leadership skills, master project planning, improve testing skills, etc_
+  _E.g., develop SDE knowledge, enhance leadership skills, master project planning, improve testing skills, develop front end sills, _
 
 
 * **Task processes: What processes will our team follow to meet our goals, complete tasks, or to build team relationships?**
