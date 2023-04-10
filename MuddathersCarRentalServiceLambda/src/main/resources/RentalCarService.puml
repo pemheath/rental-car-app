@@ -36,7 +36,7 @@ class ViewAvailableInventoryResponse{}
 
 class ViewAvailableInventoryRequest {}
 
-ViewCarRequest --> ViewCarActivity   
+ViewCarRequest --> ViewCarActivity
 ViewCarActivity-->ViewCarResponse : returns
 ViewCarActivity --|> CarDao : has a
 
