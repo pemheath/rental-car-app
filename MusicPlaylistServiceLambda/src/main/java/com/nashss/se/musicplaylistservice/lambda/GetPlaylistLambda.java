@@ -16,14 +16,16 @@ public class GetPlaylistLambda
 
     @Override
     public LambdaResponse handleRequest(LambdaRequest<GetPlaylistRequest> input, Context context) {
+        //takes data coming in as input , converts that data into a request object in your activity (ViewCarRequeset)
         log.info("handleRequest");
-        return super.runActivity(
+        return super.runActivity( //this returns lambda response
             () -> input.fromPath(path ->
                     GetPlaylistRequest.builder()
                             .withId(path.get("id"))
                             .build()),
             (request, serviceComponent) ->
                     serviceComponent.provideGetPlaylistActivity().handleRequest(request)
+                // get the activity using dagger, call the activity with the request
         );
     }
 }
