@@ -1,0 +1,49 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class CarDao {
+-DynamoDBMapper mapper
+
++ Car saveCar(Car car)
++ Car getCar(String VIN)
++ Boolean deleteCar(Car car)
++ List<Cars> getCarsByAvailabilityAndClass(Availability availability, Class class)
+
+}
+
+class TransactionDao {
+-DynamoDBMapper mapper
++ Transaction saveTransaction
++ Transaction getTransaction
+
+}
+
+class ViewCarActivity{
+- CarDao carDao
++ ViewCarResponse handleRequest(ViewCarRequest request)
+}
+
+class ViewCarResponse{}
+
+class ViewCarRequest{}
+
+class ViewAvailableInventoryActivity{
+-CarDao carDao
++ViewAvailableInventoryResponse handleRequest(ViewAvailableInventoryRequest request)
+}
+
+class ViewAvailableInventoryResponse{}
+
+class ViewAvailableInventoryRequest {}
+
+ViewCarRequest --> ViewCarActivity   
+ViewCarActivity-->ViewCarResponse : returns
+ViewCarActivity --|> CarDao : has a
+
+ViewAvailableInventoryRequest --> ViewAvailableInventoryActivity
+ViewAvailableInventoryActivity-->ViewAvailableInventoryResponse
+ViewAvailableInventoryActivity --|> CarDao : has a
+
+
+
+@enduml
