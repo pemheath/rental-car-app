@@ -59,7 +59,7 @@ The following guide might be helpful as you work through your teams charter:
 ### Goals
 
 * **Overall: What is our overall objective for the Learn & Be Curious unit?**
-  _“Apply what we’ve learned throughout this program in a team project to prepare ourselves for internships and full-time SDE roles.”_
+  _“Apply what we’ve learned throughout this program in a team project to prepare ourselves for internships and full-time SDE roles and to get exposure to front end development.”_
 
 
 * **Performance: What do we want to prioritize in terms of what we achieve?**
@@ -73,41 +73,41 @@ exceed Jody's expectations, learn and experience the scrum framework in building
 
 
 * **Task processes: What processes will our team follow to meet our goals, complete tasks, or to build team relationships?**
-  _E.g., leadership, meeting procedures/length of meetings, expectations for meeting attendance and timeliness, other types of meetings (happy hours, lunch and learns)_
+  _Daily morning standups with task distribution. We will not pull tickets from no status until all tickets committed to for the sprint are complete. Meet up at 3:40 to chat (morale builder)_
 
 ## Meaning & Impact
 
 **What is personally important for each team member about becoming an SDE?**
 
-* _Team Member A_:
-* _Team Member B_:
-* _Team Member C_:
-* _Team Member D_:
+* _Kaden_: Computers are cool, and I want to program them. To buy a cat!
+* _Frazier_: To travel wherever I want!
+* _Muddather_: I like programming. 
+* _Pemberton_: I want a flexible career that I enjoy.
 
 **What each team member wants to achieve: e.g. improve analytical skills, learn project management skills, develop public speaking skills, speak up more, speak up less, etc.**
 
-* _Team Member A_:
-* _Team Member B_:
-* _Team Member C_:
-* _Team Member D_:
+* _Kaden_: I want to speak up more, learning to manage a project, speak up more.
+* _Frazier_: I want to continue to develop my object oriented awareness. I want to improve analytical coding skills.
+* _Muddather_: I want to be able to manage and build/finish a project.
+* _Pemberton_: I want to be able to write some  functional front end code. 
 
 ## Team Member Roles and Responsibilities
 
 _Filling out the following roles and responsibilities is suggested only. Some roles will be permanent and some may be temporary. Some roles may be assigned to one or two people, and others may be rotated. Feel free to create additional rotating or permanent roles as you go._
 
-|**Role**               |**Responsibilities** |**Primary person** |**Secondary person** |
-|---                    |---                  |---                |---                  |
-|Liaison to Instructors |                     |                   |                     |
-|Rotating Role 1        |                     |                   |                     |
-|Rotating Role 2        |                     |                   |                     |
-|Rotating Role 3        |                     |                   |                     |
-|Rotating Role 4        |                     |                   |                     |
+|**Role**               |**Responsibilities** | **Primary person** |**Secondary person** |
+|---                    |---                  |--------------------|---                  |
+|Liaison to Instructors |                     | Kaden              |                     |
+|Rotating Role 1        |                     |                    |                     |
+|Rotating Role 2        |                     |                    |                     |
+|Rotating Role 3        |                     |                    |                     |
+|Rotating Role 4        |                     |                    |                     |
 
 ## Acknowledgement
 
 **I agree to the terms and conditions of these team agreements:**
 
-* _Team Member A_:
-* _Team Member B_:
-* _Team Member C_:
-* _Team Member D_:
+* _Kaden_:
+* _Frazier_:
+* _Muddather_:
+* _Pemberton_:

@@ -127,7 +127,7 @@ String phoneNumber;
 ```
 
 ```
-//Transactions
+//Transactions (model)
 
 String clientId; partition key
 String transactionId; sort key
@@ -137,7 +137,7 @@ BigDecimal costPerDay;
 ZonedDateTime dateOut;
 ZonedDateTime dateIn;
 BigDecimal totalCost;
-Boolean active;
+
 
 ```
 
@@ -213,17 +213,27 @@ Boolean active;
 # 7. Tables
 
 ```
-//Transactions (a model and a table)
+//Transactions (table)
 
 String clientId; partition key
 String transactionId; sort key
-Client client;
+String client; (json)
 String VIN;
-BigDecimal costPerDay;   
-ZonedDateTime dateOut;
-ZonedDateTime dateIn;
-BigDecimal totalCost;
-Boolean active;
+Number costPerDay;   
+String dateOut;
+String dateIn;
+String totalCost;
+
+
+//Cars (table)
+String VIN; (partition key) 
+String make; 
+String model;
+String classOfVehicle; 
+Number costPerDay;
+String availability;
+String year; 
+Number capacity; 
 
 GSI//
  
@@ -232,18 +242,9 @@ GSI//
  The power of this index is to answer the question "What cars are available?" and "What sedans are available? or What SUVs are available?"
  We can then query specific cars from the base table by specifying the VIN.
  
- availability ENUM partition key;
- classOfVehicle ENUM sort key;
- VIN  string;
-//Cars (a model and a table)
-String VIN; (partition key) 
-String make; 
-String model;
-ENUM classOfVehicle; 
-BigDecimal costPerDay;
-ENUM availability;
-Integer year; 
-Integer capacity; 
+ String availability partition key;
+ String classOfVehicle sort key;
+ String VIN  string;
 
 ```
 
