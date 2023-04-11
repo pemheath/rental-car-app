@@ -1,7 +1,7 @@
 package com.nashss.se.rentalcarservice.exceptions;
 
 public class InvalidAttributesChangeException extends InvalidAttributesException{
-
+    private static final long serialVersionUID = 456845456745674567L;
     public InvalidAttributesChangeException() {
         super();
     }
@@ -18,7 +18,4 @@ public class InvalidAttributesChangeException extends InvalidAttributesException
         super(message, cause);
     }
 
-    public InvalidAttributesChangeException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
-    }
 }
