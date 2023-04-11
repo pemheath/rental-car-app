@@ -1,49 +1,156 @@
 @startuml
-'https://plantuml.com/class-diagram
+!theme reddress-darkblue
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+class Car {
+    - String VIN
+    - String make
+    - String model
+    - ENUM classOfVehicle
+    - BigDecimal costPerDay
+    - ENUM availability
+    - Integer year
+    - Integer capacity
+}
+
+class Transaction {
+    - String clientId
+    - String transactionId
+    - Client client
+    - String VIN
+    - BigDecimal costPerDay
+    - ZonedDateTime dateOut
+    - ZonedDateTime dateIn
+    - BigDecimal totalCost
+}
+
+class Client {
+    - String licenseNumber;
+    - String name;
+    - String email;
+    - String phoneNumber;
+}
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+class CarModel {
+    - String VIN
+    - String make
+    - String model
+    - ENUM classOfVehicle
+    - BigDecimal costPerDay
+    - ENUM availability
+    - Integer year
+    - Integer capacity
+}
+
+class TransactionModel {
+    - String clientId
+    - String transactionId
+    - Client client
+    - String VIN
+    - BigDecimal costPerDay
+    - ZonedDateTime dateOut
+    - ZonedDateTime dateIn
+    - BigDecimal totalCost
+}
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
 class CarDao {
--DynamoDBMapper mapper
+    -DynamoDBMapper mapper
 
-+ Car saveCar(Car car)
-+ Car getCar(String VIN)
-+ Boolean deleteCar(Car car)
-+ List<Cars> getCarsByAvailabilityAndClass(Availability availability, Class class)
-
+    + Car saveCar(Car car)
+    + Car getCar(String VIN)
+    + Boolean deleteCar(Car car)
+    + List<Cars> getCarsByAvailabilityAndClass(Availability availability, Class class)
 }
 
 class TransactionDao {
--DynamoDBMapper mapper
-+ Transaction saveTransaction
-+ Transaction getTransaction
+    -DynamoDBMapper mapper
+
+    + Transaction saveTransaction
+    + Transaction getTransaction
+}
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+enum availability {
+    AVAILABLE
+    RENTED
+    MAINTENANCE
+}
+
+enum classOfVehicle {
+    COMPACT
+    SEDAN
+    CONVERTIBLE
+    TRUCK
+    SUV
+    VAN
+}
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+class ViewAvailableInventoryActivity {
+    -CarDao carDao
+
+    +ViewAvailableInventoryResponse handleRequest(ViewAvailableInventoryRequest request)
+}
+
+'class ViewCarActivity {
+'    - CarDao carDao
+'
+'    + ViewCarResponse handleRequest(ViewCarRequest request)
+'}
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+class ViewAvailableInventoryRequest {
+    - ENUM availability
+    - ENUM class
+}
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+class ViewAvailableInventoryResult {
+    - List<Cars>
+}
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+class ViewInventoryLambda {
 
 }
 
-class ViewCarActivity{
-- CarDao carDao
-+ ViewCarResponse handleRequest(ViewCarRequest request)
-}
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
-class ViewCarResponse{}
+ViewAvailableInventoryActivity *-- CarDao
 
-class ViewCarRequest{}
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
-class ViewAvailableInventoryActivity{
--CarDao carDao
-+ViewAvailableInventoryResponse handleRequest(ViewAvailableInventoryRequest request)
-}
+Transaction *-- Client
 
-class ViewAvailableInventoryResponse{}
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
-class ViewAvailableInventoryRequest {}
+Car *-- availability
+Car *-- classOfVehicle
 
-ViewCarRequest --> ViewCarActivity
-ViewCarActivity-->ViewCarResponse : returns
-ViewCarActivity --|> CarDao : has a
+'ViewAvailableInventoryRequest *-- availability
+'ViewAvailableInventoryRequest *-- classOfVehicle
 
-ViewAvailableInventoryRequest --> ViewAvailableInventoryActivity
-ViewAvailableInventoryActivity-->ViewAvailableInventoryResponse
-ViewAvailableInventoryActivity --|> CarDao : has a
-
-
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
 @enduml
