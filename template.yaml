@@ -404,6 +404,22 @@ Resources:
           Projection:
             ProjectionType: "KEYS_ONLY"
 
+  TransactionsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: "clientId"
+          AttributeType: "S"
+        - AttributeName: "transactionId"
+          AttributeType: "S"
+      KeySchema:
+        - AttributeName: "clientId"
+          KeyType: "HASH"
+        - AttributeName: "transactionId"
+          KeyType: "RANGE"
+      BillingMode: "PAY_PER_REQUEST"
+      TableName: "transactions"
+
 #-----------------------------------------------------
 # The outputs defined below will be printed
 #  to the screen after a successful deploy
