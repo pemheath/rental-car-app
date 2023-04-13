@@ -14,7 +14,7 @@ export default class MusicPlaylistClient extends BindingClass {
 
     constructor(props = {}) {
         super();
-        console.log("constructing client");
+        console.log("constructing client from header constructor");
 
         const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'getPlaylist', 'getPlaylistSongs', 'createPlaylist'];
         this.bindClassMethods(methodsToBind, this);
@@ -24,7 +24,9 @@ export default class MusicPlaylistClient extends BindingClass {
 
         axios.defaults.baseURL = process.env.API_BASE_URL;
         this.axiosClient = axios;
+        console.log("we've made our axios client");
         this.clientLoaded();
+        console.log("clientLoaded method has run from Client class");
 
     }
 
@@ -32,6 +34,7 @@ export default class MusicPlaylistClient extends BindingClass {
      * Run any functions that are supposed to be called once the client has loaded successfully.
      */
     clientLoaded() {
+        console.log("The clientLoaded method has been successfully called.")
         if (this.props.hasOwnProperty("onReady")) {
             this.props.onReady(this);
         }
@@ -81,7 +84,9 @@ export default class MusicPlaylistClient extends BindingClass {
      */
     async getPlaylist(id, errorCallback) {
         try {
-            const response = await this.axiosClient.get(`playlists/${id}`);
+            console.log("now in the getPlaylistmethodOfClient");
+            const response = await this.axiosClient.get(`playlists/${id}`); // we seem to be getting stuck here
+            console.log("got a response");
             return response.data.playlist;
         } catch (error) {
             this.handleError(error, errorCallback)
@@ -157,12 +162,17 @@ export default class MusicPlaylistClient extends BindingClass {
      * @param criteria A string containing search criteria to pass to the API.
      * @returns The playlists that match the search criteria.
      */
-    async search(criteria, errorCallback) {
+    async search(criteria, errorCallback) { //this is where we are  going to link to backend
         try {
-            const queryParams = new URLSearchParams({ q: criteria })
+            console.log("we've now gotten to this search in the client!");
+            const queryParams = new URLSearchParams({ q: criteria }) // the q in backend??
             const queryString = queryParams.toString();
+            console.log("we've gotten the queries");
+            console.log(queryParams, queryString);
 
-            const response = await this.axiosClient.get(`playlists/search?${queryString}`);
+            const response = await this.axiosClient.get(`playlists/search?${queryString}`); // I think we change this to send "availble" to Lambda, so redirect this to our new lambda.
+            console.log(response.data.playlists);
+
 
             return response.data.playlists;
         } catch (error) {

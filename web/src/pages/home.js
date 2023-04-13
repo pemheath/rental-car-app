@@ -35,6 +35,7 @@ class Home extends BindingClass {
         // Create a enw datastore with an initial "empty" state.
         this.dataStore = new DataStore(EMPTY_DATASTORE_STATE);
         this.header = new Header(this.dataStore);
+        this.dataStore.addChangeListener(this.addPlaylistToPage);
         this.dataStore.addChangeListener(this.displaySearchResults);
         console.log("home constructor"); //system.out.println in javascript
     }
@@ -122,14 +123,15 @@ class Home extends BindingClass {
 
         const searchCriteria = document.getElementById('search-criteria').value; // playlistName
         const previousSearchCriteria = this.dataStore.get(SEARCH_CRITERIA_KEY);
-
+        console.log(searchCriteria);
         // If the user didn't change the search criteria, do nothing
         if (previousSearchCriteria === searchCriteria) {
             return;
         }
 
         if (searchCriteria) {
-            const results = await this.client.getPlaylist(searchCriteria);
+            const results = await this.client.search(searchCriteria);
+            console.log(results);
 
             this.dataStore.setState({
                 [SEARCH_CRITERIA_KEY]: searchCriteria,

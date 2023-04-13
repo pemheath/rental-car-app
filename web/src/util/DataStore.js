@@ -58,6 +58,7 @@ export default class DataStore extends BindingClass {
      * Add a listener. Whenever the state is changed in the DataStore all of the listeners will be executed.
      */
     addChangeListener(listener) {
+        console.log("adding change listeners");
         this.listeners.push(listener);
     }
 

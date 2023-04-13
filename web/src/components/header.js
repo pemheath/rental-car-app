@@ -15,6 +15,7 @@ export default class Header extends BindingClass {
         this.bindClassMethods(methodsToBind, this);
 
         this.client = new MusicPlaylistClient();
+        console.log("client has been constructed, header constructor complete");
     }
 
     /**
