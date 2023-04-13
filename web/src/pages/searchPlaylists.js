@@ -30,11 +30,12 @@ class SearchPlaylists extends BindingClass {
         super();
 
         // all of the functions for this class will be in this array
-        this.bindClassMethods(['mount', 'search', 'displaySearchResults', 'getHTMLForSearchResults'], this);
+        this.bindClassMethods(['clientLoaded', 'mount', 'search', 'displaySearchResults', 'addPlaylistToPage','getHTMLForSearchResults'], this);
 
         // Create a enw datastore with an initial "empty" state.
         this.dataStore = new DataStore(EMPTY_DATASTORE_STATE);
         this.header = new Header(this.dataStore);
+        this.dataStore.addChangeListener(this.addPlaylistToPage);
         this.dataStore.addChangeListener(this.displaySearchResults);
         console.log("searchPlaylists constructor"); //system.out.println in javascript
     }
@@ -50,7 +51,42 @@ class SearchPlaylists extends BindingClass {
         this.header.addHeaderToPage();
 
         this.client = new MusicPlaylistClient();
+
     }
+
+       /**
+         * Once the client is loaded, get the playlist metadata and song list.
+         */
+        async clientLoaded() {
+            const playlistId = document.getElementById('search-criteria').value;
+            console.log("retrieved id from dropdown.");
+            const playlist = await this.client.getPlaylist(playlistId);
+            console.log("stored playlist metadata");
+            this.dataStore.set('playlist', playlist);
+            document.getElementById('songs').innerText = "(loading songs...)";
+            const songs = await this.client.getPlaylistSongs(playlistId);
+            this.dataStore.set('songs', songs);
+        }
+
+            /**
+             * When the playlist is updated in the datastore, update the playlist metadata on the page.
+             */
+            addPlaylistToPage() {
+                const playlist = this.dataStore.get('playlist');
+                if (playlist == null) {
+                    return;
+                }
+
+                document.getElementById('playlist-name').innerText = playlist.name;
+                document.getElementById('playlist-owner').innerText = playlist.customerName;
+
+                let tagHtml = '';
+                let tag;
+                for (tag of playlist.tags) {
+                    tagHtml += '<div class="tag">' + tag + '</div>';
+                }
+                document.getElementById('tags').innerHTML = tagHtml;
+            }
 
     /**
      * Uses the client to perform the search, 
@@ -63,7 +99,7 @@ class SearchPlaylists extends BindingClass {
 
         const searchCriteria = document.getElementById('search-criteria').value;
         const previousSearchCriteria = this.dataStore.get(SEARCH_CRITERIA_KEY);
-
+        console.log("Set search criteria to whatever was put in text box");
         // If the user didn't change the search criteria, do nothing
         if (previousSearchCriteria === searchCriteria) {
             return;

@@ -25,7 +25,7 @@ class ViewPlaylist extends BindingClass {
         const playlistId = urlParams.get('id');
         document.getElementById('playlist-name').innerText = "Loading Playlist ...";
         const playlist = await this.client.getPlaylist(playlistId);
-        this.dataStore.set('playlist', playlist);
+        this.dataStore.set('playlist', playlist); //sets playlist in datastore to metadata retrieved from client method
         document.getElementById('songs').innerText = "(loading songs...)";
         const songs = await this.client.getPlaylistSongs(playlistId);
         this.dataStore.set('songs', songs);

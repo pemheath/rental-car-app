@@ -1,31 +1,57 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script type="text/javascript" src="assets/searchPlaylists.js"></script>
+    <script type="text/javascript" src="assets/home.js"></script>
     <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 
 <body class="background">
-<header class="header" id="header"></header>
+<header class="header" id="header"></header> <!-- this is where JS looks for element id = header...-->
 <div class="card">
-    <h2>Search Playlists</h2>
+    <h2>Showing Available Inventory.</h2>
     <form class="card-content" id="search-playlists-form">
         <p class="form-field">
-            <label>Search by name or tag</label>
-            <input type="text" class="validated-field" id="search-criteria" placeholder="smooth-jamz" autofocus>
-            <sub>Search is case-sensitive and tags must match exactly.</sub>
+            <label>Beta Feature: Filter by Availability Status.</label>
+            <select name="cars" id="search-criteria-extra">
+                <option value = "AVAILABLE">Available</option>
+                <option value = "RENTED">Currently Rented</option>
+                <option value = "Maintenance">Out for Maintenance</option>
+            </select>
+
+            <label>Beta Feature: Filter by Class.</label>
+            <select name="cars" id="search-criteria">
+                <option value = "NSS Songs">TEST</option>
+                <option value = "O8GDb">TEST2</option>
+                <option value = "SUV">SUV</option>
+                <option value = "Truck">Truck</option>
+                <option value = "Compact">Compact</option>
+                <option value = "Sedan">Sedan</option>
+                <option value = "Convertible">Convertible</option>
+                <option value = "Van">Van</option>
+            </select>
+
         </p>
     </form>
     <p class="button-group">
-        <a href="#" class="button" id="search-btn">Search</a>
+        <a href="#" class="button" id="search-btn">Search</a> <!--this is the search button -->
         <a href="createPlaylist.html" class="button">New Playlist</a>
     </p>
 </div>
+
+<div class="card">
+    <h2 id="playlist-name"></h2>
+    <h3>Created by: <span id="playlist-owner"></span></h3>
+    <div class="tags" id="tags"></div>
+    <ol id="songs"></ol>
+</div>
+
 <div class="card hidden" id='search-results-container'>
     <h3>Results for <span id="search-criteria-display"></span></h3>
     <div id="search-results-display">
     </div>
 </div>
+
+
 </body>
 
 </html>

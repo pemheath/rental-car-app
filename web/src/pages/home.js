@@ -30,7 +30,7 @@ class Home extends BindingClass {
         super();
 
         // all of the functions for this class will be in this array
-        this.bindClassMethods(['mount', 'search', 'displaySearchResults', 'getHTMLForSearchResults'], this);
+        this.bindClassMethods(['clientLoaded', 'mount', 'displaySearchResults', 'addPlaylistToPage', 'search', 'getHTMLForSearchResults'], this);
 
         // Create a enw datastore with an initial "empty" state.
         this.dataStore = new DataStore(EMPTY_DATASTORE_STATE);
@@ -38,6 +38,41 @@ class Home extends BindingClass {
         this.dataStore.addChangeListener(this.displaySearchResults);
         console.log("home constructor"); //system.out.println in javascript
     }
+
+
+
+    /**
+     * Once the client is loaded, get the playlist metadata and song list.
+     */
+    async clientLoaded() {
+        const playlistId = document.getElementById('search-criteria').value;
+        console.log("retrieved id from dropdown.");
+        const playlist = await this.client.getPlaylist(playlistId);
+        this.dataStore.set('playlist', playlist);
+        document.getElementById('songs').innerText = "(loading songs...)";
+        const songs = await this.client.getPlaylistSongs(playlistId);
+        this.dataStore.set('songs', songs);
+    }
+
+        /**
+         * When the playlist is updated in the datastore, update the playlist metadata on the page.
+         */
+        addPlaylistToPage() {
+            const playlist = this.dataStore.get('playlist');
+            if (playlist == null) {
+                return;
+            }
+
+            document.getElementById('playlist-name').innerText = playlist.name;
+            document.getElementById('playlist-owner').innerText = playlist.customerName;
+
+            let tagHtml = '';
+            let tag;
+            for (tag of playlist.tags) {
+                tagHtml += '<div class="tag">' + tag + '</div>';
+            }
+            document.getElementById('tags').innerHTML = tagHtml;
+        }
 
     /**
      * Add the header to the page and load the MusicPlaylistClient.
@@ -48,9 +83,33 @@ class Home extends BindingClass {
         document.getElementById('search-btn').addEventListener('click', this.search);
 
         this.header.addHeaderToPage();
+        console.log("added header");
 
         this.client = new MusicPlaylistClient();
+        console.log("loaded client");
     }
+
+        /**
+         * Pulls search results from the datastore and displays them on the html page.
+         */
+        displaySearchResults() {
+            const searchCriteria = this.dataStore.get(SEARCH_CRITERIA_KEY);
+            const searchResults = this.dataStore.get(SEARCH_RESULTS_KEY);
+
+            const searchResultsContainer = document.getElementById('search-results-container');
+            const searchCriteriaDisplay = document.getElementById('search-criteria-display');
+            const searchResultsDisplay = document.getElementById('search-results-display');
+
+            if (searchCriteria === '') {
+                searchResultsContainer.classList.add('hidden');
+                searchCriteriaDisplay.innerHTML = '';
+                searchResultsDisplay.innerHTML = '';
+            } else {
+                searchResultsContainer.classList.remove('hidden');
+                searchCriteriaDisplay.innerHTML = `"${searchCriteria}"`;
+                searchResultsDisplay.innerHTML = this.getHTMLForSearchResults(searchResults);
+            }
+        }
 
     /**
      * Uses the client to perform the search,
@@ -61,7 +120,7 @@ class Home extends BindingClass {
         // Prevent submitting the from from reloading the page.
         evt.preventDefault();
 
-        const searchCriteria = document.getElementById('search-criteria').value;
+        const searchCriteria = document.getElementById('search-criteria').value; // playlistName
         const previousSearchCriteria = this.dataStore.get(SEARCH_CRITERIA_KEY);
 
         // If the user didn't change the search criteria, do nothing
@@ -70,7 +129,7 @@ class Home extends BindingClass {
         }
 
         if (searchCriteria) {
-            const results = await this.client.search(searchCriteria);
+            const results = await this.client.getPlaylist(searchCriteria);
 
             this.dataStore.setState({
                 [SEARCH_CRITERIA_KEY]: searchCriteria,
@@ -137,6 +196,7 @@ class Home extends BindingClass {
  */
 const main = async () => {
     const home = new Home();
+    console.log("created home javascript");
     home.mount();
 };
 

@@ -14,6 +14,7 @@ export default class MusicPlaylistClient extends BindingClass {
 
     constructor(props = {}) {
         super();
+        console.log("constructing client");
 
         const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'getPlaylist', 'getPlaylistSongs', 'createPlaylist'];
         this.bindClassMethods(methodsToBind, this);
@@ -24,6 +25,7 @@ export default class MusicPlaylistClient extends BindingClass {
         axios.defaults.baseURL = process.env.API_BASE_URL;
         this.axiosClient = axios;
         this.clientLoaded();
+
     }
 
     /**
@@ -151,7 +153,7 @@ export default class MusicPlaylistClient extends BindingClass {
     }
 
     /**
-     * Search for a soong.
+     * Search for a song.
      * @param criteria A string containing search criteria to pass to the API.
      * @returns The playlists that match the search criteria.
      */
