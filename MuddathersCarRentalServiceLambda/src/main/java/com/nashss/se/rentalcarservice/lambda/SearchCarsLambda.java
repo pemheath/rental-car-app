@@ -17,9 +17,9 @@ public class SearchCarsLambda extends LambdaActivityRunner<SearchCarsRequest, Se
         log.info("handleRequest");
         return super.runActivity(
                 () -> input.fromQuery(query -> {
-                        log.info("Searching for cars with availability {}", query.get("availability"));
+                        log.info("Searching for cars with availability {}", query.get("q"));
                         return SearchCarsRequest.builder()
-                                .withCriteria(query.get("availability"))
+                                .withCriteria(query.get("q"))
                                 .build();}),
                 (request, serviceComponent) ->
                         serviceComponent.provideCarsActivity().handleRequest(request)
