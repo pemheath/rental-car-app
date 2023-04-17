@@ -68,7 +68,7 @@ public class Car {
     }
 
     @DynamoDBTypeConvertedEnum
-    @DynamoDBIndexRangeKey(globalSecondaryIndexName = CAR_AVAILABILITY_INDEX, attributeName = "class")
+    @DynamoDBIndexRangeKey(globalSecondaryIndexName = CAR_AVAILABILITY_INDEX, attributeName = "classOfVehicle")
     public CarClassEnum getClassOfVehicle() {
         return classOfVehicle;
     }
