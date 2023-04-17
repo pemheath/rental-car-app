@@ -5,6 +5,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedQueryList;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.nashss.se.rentalcarservice.dynamodb.models.Car;
+import com.nashss.se.rentalcarservice.exceptions.CarNotFoundException;
 
 import javax.inject.Inject;
 import java.util.*;
@@ -59,5 +60,14 @@ public class CarDao {
             }
         }
         return carList;
+    }
+
+    public Car getCar(String VIN) {
+        Car car = this.mapper.load(Car.class, VIN);
+
+        if (car == null) {
+            throw new CarNotFoundException("Could not find car with VIN " + VIN);
+        }
+        return car;
     }
 }

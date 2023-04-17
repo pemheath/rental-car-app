@@ -369,6 +369,28 @@ Resources:
             Auth:
               Authorizer: 'NONE'
 
+  GetCarLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: !GetAtt AccessRole.Arn
+      CodeUri: MuddathersCarRentalServiceLambda
+      Handler: com.nashss.se.rentalcarservice.lambda.GetCarLambda::handleRequest
+      Runtime: java11
+      Architectures:
+        - x86_64
+      MemorySize: 512
+      Environment:
+        Variables:
+          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+      Events:
+        RentalCarService:
+          Type: Api
+          Properties:
+            Path: /car/{vin}
+            Method: get
+            Auth:
+              Authorizer: 'NONE'
+
   #-----------------------------------------------------
   # DynamoDB Configuration
   #-----------------------------------------------------
