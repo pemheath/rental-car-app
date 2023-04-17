@@ -169,10 +169,10 @@ export default class MusicPlaylistClient extends BindingClass {
             const response = await this.axiosClient.get(`home/?${queryString}`);
             console.log(response);
             console.log(response.data);
-            console.log(response.data.playlists);
+            console.log(response.data.cars);
 
 
-            return response.data.playlists;
+            return response.data.cars;
         } catch (error) {
             this.handleError(error, errorCallback)
         }
