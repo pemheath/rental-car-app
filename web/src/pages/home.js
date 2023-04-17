@@ -47,7 +47,6 @@ class Home extends BindingClass {
      */
     async clientLoaded() {
         const playlistId = document.getElementById('search-criteria').value;
-        console.log("retrieved id from dropdown.");
         const playlist = await this.client.getPlaylist(playlistId);
         this.dataStore.set('playlist', playlist);
         document.getElementById('songs').innerText = "(loading songs...)";
@@ -121,10 +120,10 @@ class Home extends BindingClass {
         // Prevent submitting the from from reloading the page.
         evt.preventDefault();
 
-        const searchCriteria = document.getElementById('search-criteria').value; // playlistName
+        const searchCriteria = document.getElementById('search-criteria').value + " " + document.getElementById('search-criteria-extra').value;
         const previousSearchCriteria = this.dataStore.get(SEARCH_CRITERIA_KEY);
         console.log(searchCriteria);
-        // If the user didn't change the search criteria, do nothing
+//         If the user didn't change the search criteria, do nothing
         if (previousSearchCriteria === searchCriteria) {
             return;
         }
@@ -132,6 +131,8 @@ class Home extends BindingClass {
         if (searchCriteria) {
             const results = await this.client.search(searchCriteria);
             console.log(results);
+            console.log("back in home.js");
+
 
             this.dataStore.setState({
                 [SEARCH_CRITERIA_KEY]: searchCriteria,
@@ -174,15 +175,15 @@ class Home extends BindingClass {
             return '<h4>No results found</h4>';
         }
 
-        let html = '<table><tr><th>Name</th><th>Song Count</th><th>Tags</th></tr>';
+        let html = '<table><tr><th>VIN</th><th>Availability</th><th>Class</th></tr>';
         for (const res of searchResults) {
             html += `
             <tr>
                 <td>
-                    <a href="playlist.html?id=${res.id}">${res.name}</a>
+                    <a href="playlist.html?id=${res.id}">${res.vin}</a>
                 </td>
-                <td>${res.songCount}</td>
-                <td>${res.tags?.join(', ')}</td>
+                <td>${res.availability}</td>
+                <td>${res.classOfVehicle}</td>
             </tr>`;
         }
         html += '</table>';
@@ -198,7 +199,6 @@ class Home extends BindingClass {
  */
 const main = async () => {
     const home = new Home();
-    console.log("created home javascript");
     home.mount();
 };
 

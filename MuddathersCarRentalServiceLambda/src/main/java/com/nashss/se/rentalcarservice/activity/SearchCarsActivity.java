@@ -35,7 +35,7 @@ public class SearchCarsActivity {
      * <p>
      * It then returns the matching playlists, or an empty result list if none are found.
      *
-     * @param searchPlaylistsRequest request object containing the search criteria
+     * @param searchCarsRequest request object containing the search criteria
      * @return searchPlaylistsResult result object containing the playlists that match the
      * search criteria.
      */

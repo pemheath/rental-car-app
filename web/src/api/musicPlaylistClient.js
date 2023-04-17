@@ -14,9 +14,8 @@ export default class MusicPlaylistClient extends BindingClass {
 
     constructor(props = {}) {
         super();
-        console.log("constructing client from header constructor");
 
-        const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'getPlaylist', 'getPlaylistSongs', 'createPlaylist'];
+        const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'getPlaylist', 'getPlaylistSongs', 'createPlaylist', 'search'];
         this.bindClassMethods(methodsToBind, this);
 
         this.authenticator = new Authenticator();;
@@ -24,9 +23,7 @@ export default class MusicPlaylistClient extends BindingClass {
 
         axios.defaults.baseURL = process.env.API_BASE_URL;
         this.axiosClient = axios;
-        console.log("we've made our axios client");
         this.clientLoaded();
-        console.log("clientLoaded method has run from Client class");
 
     }
 
@@ -34,7 +31,6 @@ export default class MusicPlaylistClient extends BindingClass {
      * Run any functions that are supposed to be called once the client has loaded successfully.
      */
     clientLoaded() {
-        console.log("The clientLoaded method has been successfully called.")
         if (this.props.hasOwnProperty("onReady")) {
             this.props.onReady(this);
         }
@@ -158,19 +154,21 @@ export default class MusicPlaylistClient extends BindingClass {
     }
 
     /**
-     * Search for a song.
+     * Search for a car.
      * @param criteria A string containing search criteria to pass to the API.
-     * @returns The playlists that match the search criteria.
+     * @returns The cars that match the search criteria.
      */
     async search(criteria, errorCallback) { //this is where we are  going to link to backend
         try {
-            console.log("we've now gotten to this search in the client!");
-            const queryParams = new URLSearchParams({ q: criteria }) // the q in backend??
+            console.log(criteria);
+            const queryParams = new URLSearchParams({ q: criteria })
             const queryString = queryParams.toString();
-            console.log("we've gotten the queries");
-            console.log(queryParams, queryString);
+            console.log("query string is");
+            console.log(queryString);
 
-            const response = await this.axiosClient.get(`playlists/search?${queryString}`); // I think we change this to send "availble" to Lambda, so redirect this to our new lambda.
+            const response = await this.axiosClient.get(`home/?${queryString}`);
+            console.log(response);
+            console.log(response.data);
             console.log(response.data.playlists);
 
 

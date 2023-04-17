@@ -13,7 +13,7 @@ public class SearchCarsResult {
         this.cars = cars;
     }
 
-    public List<CarModel> getPlaylists() {
+    public List<CarModel> getCars() {
         return cars;
     }
 
