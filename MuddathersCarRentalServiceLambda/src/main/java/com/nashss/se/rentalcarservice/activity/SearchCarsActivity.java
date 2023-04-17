@@ -56,8 +56,6 @@ public class SearchCarsActivity {
         System.out.println("Our carModels" + carModels);
         System.out.println("Our request" + searchCarsRequest);
 
-
-
         return SearchCarsResult.builder()
                 .withCars(carModels)
                 .build();

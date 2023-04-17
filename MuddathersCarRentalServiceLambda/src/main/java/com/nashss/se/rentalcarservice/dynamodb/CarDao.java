@@ -32,13 +32,12 @@ public class CarDao {
                 .withConsistentRead(false)
                 .withKeyConditionExpression("availability = :availability")
                 .withExpressionAttributeValues(valueMap);
+
         System.out.println("Past QueryExpression");
 
         PaginatedQueryList<Car> carList = mapper.query(Car.class, queryExpression);
         System.out.println("Past query");
 
         return carList;
-
-//        mapper.load(Car.class, )
     }
 }
