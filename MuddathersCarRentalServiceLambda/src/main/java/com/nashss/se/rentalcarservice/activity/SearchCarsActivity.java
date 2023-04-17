@@ -10,6 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.inject.Inject;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.nashss.se.rentalcarservice.utils.NullUtils.ifNull;
@@ -43,9 +44,19 @@ public class SearchCarsActivity {
 
         String criteria = ifNull(searchCarsRequest.getCriteria(), "");
         String[] criteriaArray = criteria.isBlank() ? new String[0] : criteria.split("\\s");
+        System.out.println("Past isBlank");
 
         List<Car> results = carDao.searchCars(criteriaArray);
+        System.out.println("Past searchCars");
+
         List<CarModel> carModels = new ModelConverter().toCarModelList(results);
+        System.out.println("Our criteriaArray" + Arrays.toString(criteriaArray));
+        System.out.println("Our criteria" + criteria);
+        System.out.println("Our results" + results);
+        System.out.println("Our carModels" + carModels);
+        System.out.println("Our request" + searchCarsRequest);
+
+
 
         return SearchCarsResult.builder()
                 .withCars(carModels)

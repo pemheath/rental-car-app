@@ -20,16 +20,25 @@ public class Car {
     private String year;
     private Integer capacity;
 
-    public Car(String VIN, String make, String model, CarClassEnum classOfVehicle, BigDecimal costPerDay, AvailabilityEnum availability, String year, Integer capacity) {
-        this.VIN = VIN;
-        this.make = make;
-        this.model = model;
-        this.classOfVehicle = classOfVehicle;
-        this.costPerDay = costPerDay;
-        this.availability = availability;
-        this.year = year;
-        this.capacity = capacity;
-    }
+//    public Car(String VIN, String make, String model, CarClassEnum classOfVehicle, BigDecimal costPerDay, AvailabilityEnum availability, String year, Integer capacity) {
+//        this.VIN = VIN;
+//        this.make = make;
+//        this.model = model;
+//        this.classOfVehicle = classOfVehicle;
+//        this.costPerDay = costPerDay;
+//        this.availability = availability;
+//        this.year = year;
+//        this.capacity = capacity;
+//    }
+
+//    public Car(String VIN, AvailabilityEnum availability, CarClassEnum classOfVehicle) {
+//        this.VIN = VIN;
+//        this.classOfVehicle = classOfVehicle;
+//        this.availability = availability;
+//    }
+
+//    public Car() {
+//    }
 
     @DynamoDBHashKey(attributeName = "VIN")
     public String getVIN() {
@@ -40,7 +49,7 @@ public class Car {
         this.VIN = VIN;
     }
 
-    @DynamoDBAttribute(attributeName = "Make")
+    @DynamoDBAttribute(attributeName = "make")
     public String getMake() {
         return make;
     }
@@ -49,7 +58,7 @@ public class Car {
         this.make = make;
     }
 
-    @DynamoDBAttribute(attributeName = "Model")
+    @DynamoDBAttribute(attributeName = "model")
     public String getModel() {
         return model;
     }
@@ -59,7 +68,7 @@ public class Car {
     }
 
     @DynamoDBTypeConvertedEnum
-    @DynamoDBIndexRangeKey(globalSecondaryIndexName = CAR_AVAILABILITY_INDEX, attributeName = "Class")
+    @DynamoDBIndexRangeKey(globalSecondaryIndexName = CAR_AVAILABILITY_INDEX, attributeName = "classOfVehicle")
     public CarClassEnum getClassOfVehicle() {
         return classOfVehicle;
     }
@@ -68,7 +77,7 @@ public class Car {
         this.classOfVehicle = classOfVehicle;
     }
 
-    @DynamoDBAttribute(attributeName = "Cost")
+    @DynamoDBAttribute(attributeName = "cost")
     public BigDecimal getCostPerDay() {
         return costPerDay;
     }
@@ -78,7 +87,7 @@ public class Car {
     }
 
     @DynamoDBTypeConvertedEnum
-    @DynamoDBIndexHashKey(globalSecondaryIndexName = CAR_AVAILABILITY_INDEX, attributeName = "Availability")
+    @DynamoDBIndexHashKey(globalSecondaryIndexName = CAR_AVAILABILITY_INDEX, attributeName = "availability")
     public AvailabilityEnum getAvailability() {
         return availability;
     }
@@ -87,7 +96,7 @@ public class Car {
         this.availability = availability;
     }
 
-    @DynamoDBAttribute(attributeName = "Year")
+    @DynamoDBAttribute(attributeName = "year")
     public String getYear() {
         return year;
     }
@@ -96,7 +105,7 @@ public class Car {
         this.year = year;
     }
 
-    @DynamoDBAttribute(attributeName = "Capacity")
+    @DynamoDBAttribute(attributeName = "capacity")
     public Integer getCapacity() {
         return capacity;
     }

@@ -16,10 +16,11 @@ public class SearchCarsLambda extends LambdaActivityRunner<SearchCarsRequest, Se
     public LambdaResponse handleRequest(LambdaRequest<SearchCarsRequest> input, Context context) {
         log.info("handleRequest");
         return super.runActivity(
-                () -> input.fromQuery(query ->
-                        SearchCarsRequest.builder()
-                                .withCriteria(query.get("q"))
-                                .build()),
+                () -> input.fromQuery(query -> {
+                        log.info("Searching for cars with availability {}", query.get("availability"));
+                        return SearchCarsRequest.builder()
+                                .withCriteria(query.get("availability"))
+                                .build();}),
                 (request, serviceComponent) ->
                         serviceComponent.provideCarsActivity().handleRequest(request)
         );

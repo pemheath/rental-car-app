@@ -366,6 +366,8 @@ Resources:
           Properties:
             Path: /home
             Method: get
+            Auth:
+              Authorizer: 'NONE'
 
   #-----------------------------------------------------
   # DynamoDB Configuration

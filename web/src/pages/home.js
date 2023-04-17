@@ -25,21 +25,55 @@ const EMPTY_DATASTORE_STATE = {
 /**
  * Logic needed for the view playlist page of the website.
  */
-class SearchPlaylists extends BindingClass {
+class Home extends BindingClass {
     constructor() {
         super();
 
         // all of the functions for this class will be in this array
-        this.bindClassMethods(['clientLoaded', 'mount', 'search', 'displaySearchResults', 'addPlaylistToPage','getHTMLForSearchResults'], this);
+        this.bindClassMethods(['clientLoaded', 'mount', 'displaySearchResults', 'addPlaylistToPage', 'search', 'getHTMLForSearchResults'], this);
 
         // Create a enw datastore with an initial "empty" state.
         this.dataStore = new DataStore(EMPTY_DATASTORE_STATE);
         this.header = new Header(this.dataStore);
-        console.log("back to the searchPlaylist constructor");
         this.dataStore.addChangeListener(this.addPlaylistToPage);
         this.dataStore.addChangeListener(this.displaySearchResults);
-        console.log("searchPlaylists constructor"); //system.out.println in javascript
+        console.log("home constructor"); //system.out.println in javascript
     }
+
+
+
+    /**
+     * Once the client is loaded, get the playlist metadata and song list.
+     */
+    async clientLoaded() {
+        const playlistId = document.getElementById('search-criteria').value;
+        console.log("retrieved id from dropdown.");
+        const playlist = await this.client.getPlaylist(playlistId);
+        this.dataStore.set('playlist', playlist);
+        document.getElementById('songs').innerText = "(loading songs...)";
+        const songs = await this.client.getPlaylistSongs(playlistId);
+        this.dataStore.set('songs', songs);
+    }
+
+        /**
+         * When the playlist is updated in the datastore, update the playlist metadata on the page.
+         */
+        addPlaylistToPage() {
+            const playlist = this.dataStore.get('playlist');
+            if (playlist == null) {
+                return;
+            }
+
+            document.getElementById('playlist-name').innerText = playlist.name;
+            document.getElementById('playlist-owner').innerText = playlist.customerName;
+
+            let tagHtml = '';
+            let tag;
+            for (tag of playlist.tags) {
+                tagHtml += '<div class="tag">' + tag + '</div>';
+            }
+            document.getElementById('tags').innerHTML = tagHtml;
+        }
 
     /**
      * Add the header to the page and load the MusicPlaylistClient.
@@ -47,85 +81,65 @@ class SearchPlaylists extends BindingClass {
     mount() {
         // Wire up the form's 'submit' event and the button's 'click' event to the search method.
         document.getElementById('search-playlists-form').addEventListener('submit', this.search);
-        console.log("adding event listeners to search button")
         document.getElementById('search-btn').addEventListener('click', this.search);
-        console.log("Search form and search button are created");
 
         this.header.addHeaderToPage();
+        console.log("added header");
 
-        this.client = new MusicPlaylistClient(); // this seems to have already happened in the constructor
-    //    this.clientLoaded();
-
+        this.client = new MusicPlaylistClient();
+        console.log("loaded client");
     }
 
-       /**
-         * Once the client is loaded, get the playlist metadata and song list.
+        /**
+         * Pulls search results from the datastore and displays them on the html page.
          */
-        async clientLoaded() {
-            console.log("clientLoaded method of searchPlaylists now called.")
-            const playlistId = document.getElementById('search-criteria').value;
-            console.log('%s playlist assigned to playlistId from search box', playlistId);
-            const playlist = await this.client.getPlaylist(playlistId);
-            console.log("Do we ever make it here?"); //the answer is no.
-            this.dataStore.set('playlist', playlist);
-            document.getElementById('songs').innerText = "(loading songs...)";
-            const songs = await this.client.getPlaylistSongs(playlistId);
-            this.dataStore.set('songs', songs);
+        displaySearchResults() {
+            const searchCriteria = this.dataStore.get(SEARCH_CRITERIA_KEY);
+            const searchResults = this.dataStore.get(SEARCH_RESULTS_KEY);
+
+            const searchResultsContainer = document.getElementById('search-results-container');
+            const searchCriteriaDisplay = document.getElementById('search-criteria-display');
+            const searchResultsDisplay = document.getElementById('search-results-display');
+
+            if (searchCriteria === '') {
+                searchResultsContainer.classList.add('hidden');
+                searchCriteriaDisplay.innerHTML = '';
+                searchResultsDisplay.innerHTML = '';
+            } else {
+                searchResultsContainer.classList.remove('hidden');
+                searchCriteriaDisplay.innerHTML = `"${searchCriteria}"`;
+                searchResultsDisplay.innerHTML = this.getHTMLForSearchResults(searchResults);
+            }
         }
 
-            /**
-             * When the playlist is updated in the datastore, update the playlist metadata on the page.
-             */
-            addPlaylistToPage() {
-                const playlist = this.dataStore.get('playlist');
-                if (playlist == null) {
-                    return;
-                }
-
-                document.getElementById('playlist-name').innerText = playlist.name;
-                document.getElementById('playlist-owner').innerText = playlist.customerName;
-
-                let tagHtml = '';
-                let tag;
-                for (tag of playlist.tags) {
-                    tagHtml += '<div class="tag">' + tag + '</div>';
-                }
-                document.getElementById('tags').innerHTML = tagHtml;
-            }
-
     /**
-     * Uses the client to perform the search, 
+     * Uses the client to perform the search,
      * then updates the datastore with the criteria and results.
      * @param evt The "event" object representing the user-initiated event that triggered this method.
      */
-        async search(evt) {
-            console.log("!!!!calling the search function in searchPlaylists");
+    async search(evt) {
         // Prevent submitting the from from reloading the page.
-            evt.preventDefault();
+        evt.preventDefault();
 
-            const searchCriteria = document.getElementById('search-criteria').value;
-            const previousSearchCriteria = this.dataStore.get(SEARCH_CRITERIA_KEY);
-            console.log("Set search criteria to whatever was put in text box");
-            console.log(searchCriteria);
-            // If the user didn't change the search criteria, do nothing
-            if (previousSearchCriteria === searchCriteria) {
-                return;
-            }
+        const searchCriteria = document.getElementById('search-criteria').value; // playlistName
+        const previousSearchCriteria = this.dataStore.get(SEARCH_CRITERIA_KEY);
+        console.log(searchCriteria);
+        // If the user didn't change the search criteria, do nothing
+        if (previousSearchCriteria === searchCriteria) {
+            return;
+        }
 
-            if (searchCriteria) {
-                console.log("we get here with a new search");
-                const results = await this.client.search(searchCriteria);
-                console.log("we should have our results, which should be the data");
-                console.log(results);
+        if (searchCriteria) {
+            const results = await this.client.search(searchCriteria);
+            console.log(results);
 
-                this.dataStore.setState({
-                    [SEARCH_CRITERIA_KEY]: searchCriteria,
-                    [SEARCH_RESULTS_KEY]: results,
-                });
-            } else {
-                this.dataStore.setState(EMPTY_DATASTORE_STATE);
-            }
-
+            this.dataStore.setState({
+                [SEARCH_CRITERIA_KEY]: searchCriteria,
+                [SEARCH_RESULTS_KEY]: results,
+            });
+        } else {
+            this.dataStore.setState(EMPTY_DATASTORE_STATE);
+        }
     }
 
     /**
@@ -134,7 +148,6 @@ class SearchPlaylists extends BindingClass {
     displaySearchResults() {
         const searchCriteria = this.dataStore.get(SEARCH_CRITERIA_KEY);
         const searchResults = this.dataStore.get(SEARCH_RESULTS_KEY);
-        console.log(searchResults);
 
         const searchResultsContainer = document.getElementById('search-results-container');
         const searchCriteriaDisplay = document.getElementById('search-criteria-display');
@@ -184,10 +197,9 @@ class SearchPlaylists extends BindingClass {
  //instantiate our class, call the mount function on our playlist.
  */
 const main = async () => {
-    const searchPlaylists = new SearchPlaylists();
-    console.log("constructor work finished, time to call mount");
-    searchPlaylists.mount();
-    console.log("just called mount");
+    const home = new Home();
+    console.log("created home javascript");
+    home.mount();
 };
 
 window.addEventListener('DOMContentLoaded', main); //this is what kicks off the whole thing
