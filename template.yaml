@@ -408,7 +408,7 @@ Resources:
         RentalCarService:
           Type: Api
           Properties:
-            Path: /cars
+            Path: /car
             Method: post
 
   #-----------------------------------------------------
