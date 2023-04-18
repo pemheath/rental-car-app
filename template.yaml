@@ -79,13 +79,13 @@ Resources:
       UserPoolId: !Ref UserPool
       AllowedOAuthFlowsUserPoolClient: true
       CallbackURLs:
-        - http://localhost:8000
+        - http://localhost:8000/index.html
         - !If
           - DeployCloudFront
           - !Sub "https://${CloudfrontDistribution.DomainName}"
           - !Ref "AWS::NoValue"
       LogoutURLs:
-        - http://localhost:8000
+        - http://localhost:8000/index.html
         - !If
           - DeployCloudFront
           - !Sub "https://${CloudfrontDistribution.DomainName}"
@@ -126,7 +126,7 @@ Resources:
     Properties:
       DistributionConfig:
         Comment: "Cloudfront distribution for serverless website"
-        DefaultRootObject: "index.html"
+        DefaultRootObject: "home.html"
         Enabled: true
         HttpVersion: http2
         PriceClass: PriceClass_100

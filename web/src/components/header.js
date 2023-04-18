@@ -50,9 +50,9 @@ export default class Header extends BindingClass {
         const userInfo = document.createElement('div');
         userInfo.classList.add('user');
 
-        const childContent = currentUser
-            ? this.createLogoutButton(currentUser)
-            : this.createLoginButton();
+        const childContent = currentUser //boolean
+            ? this.createLogoutButton(currentUser) // if the childContent is the currentuser, create the logout button
+            : this.createLoginButton(); // else create the login button
 
         userInfo.appendChild(childContent);
 

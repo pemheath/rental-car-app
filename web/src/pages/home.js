@@ -158,7 +158,15 @@ class Home extends BindingClass {
             searchResultsContainer.classList.add('hidden');
             searchCriteriaDisplay.innerHTML = '';
             searchResultsDisplay.innerHTML = '';
-        } else {
+        }
+
+        else if (searchCriteria.includes('none')) {
+            searchResultsContainer.classList.remove('hidden');
+            searchCriteriaDisplay.innerHTML = 'All Available Inventory';
+            searchResultsDisplay.innerHTML = this.getHTMLForSearchResults(searchResults);
+        }
+
+        else {
             searchResultsContainer.classList.remove('hidden');
             searchCriteriaDisplay.innerHTML = `"${searchCriteria}"`;
             searchResultsDisplay.innerHTML = this.getHTMLForSearchResults(searchResults);
@@ -181,6 +189,7 @@ class Home extends BindingClass {
             <tr>
                 <td>
                     <a href="playlist.html?id=${res.id}">${res.vin}</a>
+                    // syn with kaden to get this to link to getcar endpoint
                 </td>
                 <td>${res.availability}</td>
                 <td>${res.classOfVehicle}</td>
