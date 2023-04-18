@@ -70,4 +70,15 @@ public class CarDao {
         }
         return car;
     }
+
+    /**
+     * Saves (creates or updates) the given car.
+     *
+     * @param car The car to save
+     * @return The Car object that was saved
+     */
+    public Car saveCar(Car car) {
+        this.mapper.save(car);
+        return car;
+    }
 }
