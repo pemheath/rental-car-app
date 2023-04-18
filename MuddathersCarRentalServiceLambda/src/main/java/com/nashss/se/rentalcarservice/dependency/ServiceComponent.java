@@ -14,4 +14,5 @@ public interface ServiceComponent {
 
     SearchCarsActivity provideCarsActivity();
 
+    GetCarActivity provideGetCarActivity();
 }
