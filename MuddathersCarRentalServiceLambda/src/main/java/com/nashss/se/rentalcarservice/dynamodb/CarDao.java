@@ -70,4 +70,9 @@ public class CarDao {
         }
         return car;
     }
+    public Car removeCar(String VIN) {
+        Car carToRemove = getCar(VIN);
+        this.mapper.delete(carToRemove);
+        return carToRemove;
+    }
 }
