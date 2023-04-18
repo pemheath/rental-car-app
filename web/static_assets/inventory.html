@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script type="text/javascript" src="assets/createPlaylist.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <title>Inventory Management Page</title>
+</head>
+<body class="background">
+<header class="header" id="header"></header>
+<div class="card">
+    <h2>Add Vehicle To Inventory</h2>
+    <form class="card-content" id="create-playlist-form">
+        <p class="hidden error" id="error-message"> </p> <!--for when they are not an authenticated user-->
+        <p class = "form-field">
+            <label>VIN </label>
+            <input type = "text" required class = "validated-field" id="VIN" placeholder ="17-digit VIN" autofocus>
+            <label>Class of Vehicle </label>
+            <select name="cars" id="search-criteria-extra">
+                <option value = "SUV">SUV</option>
+                <option value = "TRUCK">TRUCK</option>
+                <option value = "COMPACT">COMPACT</option>
+                <option value = "SEDAN">SEDAN</option>
+                <option value = "CONVERTIBLE">CONVERTIBLE</option>
+                <option value = "VAN">VAN</option>
+            </select>
+            <label>Make </label>
+            <input type = "text"  id="make" placeholder ="Honda" autofocus>
+            <label>Model</label>
+            <input type ="text" id ="model" placeholder="Civic" autofocus>
+            <label>Capacity </label>
+            <input type = "number" id="capacity" placeholder ="seats?" autofocus>
+            <label>Year</label>
+            <input type = "number" id="year">
+            <label>Cost Per Day</label>
+            <input type="number" id="cost-per-day">
+        </p>
+        <p class="button-group">
+            <a href="#" class = "button"  id="create"> Add Vehicle To Inventory </a>
+        </p>
+    </form>
+</div>
+<div class="card">
+    <h2>Remove Vehicle From Inventory</h2>
+    <form class="card-content" id="remove-vehicle">
+        <p class="hidden error" id="error-message"> </p> <!--for when they are not an authenticated user-->
+        <p class = "form-field">
+            <label>Enter the VIN of the Vehicle You Wish To Remove </label>
+            <input type = "text" required class = "validated-field" id="VIN" placeholder ="17-digit VIN" autofocus>
+            <label>Re-enter the VIN (Note - this action is Permanent and cannot be undone)</label>
+            <input type = "text" required class = "validated-field" id="VIN" placeholder ="17-digit VIN" autofocus>
+            <label> Please confirm by typing "CONFIRM"</label>
+            <input type = "text" required class = "validated-field" id = "confirmation" placeholder="case sensitive" autofocus>
+        </p>
+        <p class="button-group">
+            <a href="#" class = "button"  id="create"> REMOVE Vehicle From Inventory (!! FINAL ACTION) </a>
+        </p>
+    </form>
+</div>
+
+</body>
+</html>

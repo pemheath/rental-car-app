@@ -46,10 +46,10 @@ export default class MusicPlaylistClient extends BindingClass {
             const isLoggedIn = await this.authenticator.isUserLoggedIn();
 
             if (!isLoggedIn) {
-                return undefined;
+                return undefined; //declared but not yet assigned a value
             }
 
-            return await this.authenticator.getCurrentUserInfo();
+            return await this.authenticator.getCurrentUserInfo(); //if the use is logged in, return their info
         } catch (error) {
             this.handleError(error, errorCallback)
         }
@@ -80,9 +80,7 @@ export default class MusicPlaylistClient extends BindingClass {
      */
     async getPlaylist(id, errorCallback) {
         try {
-            console.log("now in the getPlaylistmethodOfClient");
-            const response = await this.axiosClient.get(`playlists/${id}`); // we seem to be getting stuck here
-            console.log("got a response");
+            const response = await this.axiosClient.get(`playlists/${id}`);
             return response.data.playlist;
         } catch (error) {
             this.handleError(error, errorCallback)

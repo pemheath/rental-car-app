@@ -79,13 +79,13 @@ Resources:
       UserPoolId: !Ref UserPool
       AllowedOAuthFlowsUserPoolClient: true
       CallbackURLs:
-        - http://localhost:8000
+        - http://localhost:8000/index.html
         - !If
           - DeployCloudFront
           - !Sub "https://${CloudfrontDistribution.DomainName}"
           - !Ref "AWS::NoValue"
       LogoutURLs:
-        - http://localhost:8000
+        - http://localhost:8000/index.html
         - !If
           - DeployCloudFront
           - !Sub "https://${CloudfrontDistribution.DomainName}"
