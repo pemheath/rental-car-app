@@ -28,7 +28,9 @@ module.exports = {
     searchPlaylists: path.resolve(__dirname, 'src', 'pages', 'searchPlaylists.js'),
     test: path.resolve(__dirname, 'src', 'pages', 'test.js'),
     home: path.resolve(__dirname, 'src', 'pages', 'home.js'),
+    manageInventory: path.resolve(__dirname, 'src', 'pages', 'manageInventory.js'),
     viewCar: path.resolve(__dirname, 'src', 'pages', 'viewCar.js')
+
   },
   output: {
     path: path.resolve(__dirname, 'build', 'assets'),
