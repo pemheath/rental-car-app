@@ -1,10 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script type="text/javascript" src="assets/viewCar.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
     <meta charset="UTF-8">
     <title>Cars</title>
 </head>
-<body>
+<body class="background">
+<header class="header" id="header"></header>
+
+<div class="card">
+    <h2>View Car By VIN</h2>
+    <form class="card-content" id="add-song-form">
+        <p class="hidden error" id="error-message"> </p>
+        <p class="form-field">
+            <label>VIN </label>
+            <input type="text" required class="validated-field" id="vin-for-search" placeholder="17 digit VIN" autofocus>
+        </p>
+    </form>
+    <a href="#" class="button" id="view-car">View Car</a>
+</div>
+
+<div class="card hidden" id='search-results-container'>
+    <h3>Results for <span id="search-criteria-display"></span></h3>
+    <div id="search-results-display">
+    </div>
+</div>
 
 </body>
 </html>
