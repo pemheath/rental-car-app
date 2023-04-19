@@ -111,6 +111,7 @@ class ViewCar extends BindingClass {
                 [SEARCH_CRITERIA_KEY]: vin,
                 [SEARCH_RESULTS_KEY]: carResult,
             });
+            document.getElementById('car-name').innerText = "Car Displayed Below";
             console.log(dataStore.get(SEARCH_RESULTS_KEY));
         }
     }
@@ -147,12 +148,14 @@ class ViewCar extends BindingClass {
             return '<h4>No results found</h4>';
         }
 
-        let html = '<table><tr><th>Make</th><th>Model</th><th>Year</th><th>Class</th><th>Capacity</th></tr>' +
+        let html = '<table><tr><th>Make</th><th>Model</th><th>Year</th><th>Class</th><th>Capacity</th><th>Availability</th><th>CostPerDay</th></tr>' +
             '<tr><td>'+ searchResults.make + '</td>' +
              '<td>'+ searchResults.model + '</td>'  +
              '<td>'+ searchResults.year + '</td>'  +
              '<td>'+ searchResults.classOfVehicle + '</td>'  +
-             '<td>'+ searchResults.capacity + '</td></tr>'  +
+             '<td>'+ searchResults.capacity + '</td>'  +
+             '<td>'+ searchResults.availability + '</td>' +
+             '<td>'+ searchResults.costPerDay + '</td></tr>'
               '</table>';
 
         const createButton = document.getElementById('view-car');
