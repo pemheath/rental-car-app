@@ -188,7 +188,7 @@ class Home extends BindingClass {
             html += `
             <tr>
                 <td>
-                    <a href=".car/${res.vin}">${res.vin}</a>
+                    <a href="car.html?vin=${res.vin}">${res.vin}</a>
                 </td>
                 <td>${res.availability}</td>
                 <td>${res.classOfVehicle}</td>

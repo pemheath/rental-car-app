@@ -40,14 +40,30 @@ class ViewCar extends BindingClass {
      */
     async clientLoaded() {
      console.log("calling client loaded");
+
+     const urlParams = new URLSearchParams(window.location.search);
+     const vin = urlParams.get('vin');
+
+     if(vin){
+         document.getElementById('car-name').innerText = "Loading Car ...";
+         const car = await this.client.getCar(vin);
+         console.log(car);
+         this.dataStore.setState({
+             [SEARCH_CRITERIA_KEY]: vin,
+             [SEARCH_RESULTS_KEY]: car,
+         });
+         document.getElementById('car-name').innerText = "CAR FOUND!";
+         console.log(dataStore.get(SEARCH_RESULTS_KEY));
+     }
+
     }
 
     /**
      * Add the header to the page and load the MusicPlaylistClient.
      */
     mount() {
-        document.getElementById('view-car').addEventListener('click', this.getCar);
 
+        document.getElementById('view-car').addEventListener('click', this.getCar);
         this.header.addHeaderToPage();
         this.client = new MusicPlaylistClient();
         this.clientLoaded();
@@ -77,6 +93,7 @@ class ViewCar extends BindingClass {
             if (carResult==null){
                 errorMessageDisplay.innerText = `No Car Found`;
                 errorMessageDisplay.classList.remove('hidden');
+                document.getElementById('car-name').innerText = "No Car Found";
 
                 createButton.innerText = 'Search New Car';
 
@@ -88,7 +105,6 @@ class ViewCar extends BindingClass {
                 searchCriteriaDisplay.innerHTML = '';
                 searchResultsDisplay.innerHTML = '';
 
-
             }
 
             this.dataStore.setState({
@@ -96,7 +112,6 @@ class ViewCar extends BindingClass {
                 [SEARCH_RESULTS_KEY]: carResult,
             });
             console.log(dataStore.get(SEARCH_RESULTS_KEY));
-
         }
     }
 
