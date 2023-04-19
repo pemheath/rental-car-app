@@ -22,13 +22,15 @@ module.exports = {
   optimization: {
     usedExports: true
   },
-  entry: { // this is what we will tweak when adding javascript file-->will output everything and build it to the assets folder
+  entry: { // this is what we will edit when adding javascript file-->will output everything and build it to the assets folder
     createPlaylist: path.resolve(__dirname, 'src', 'pages', 'createPlaylist.js'),
     viewPlaylist: path.resolve(__dirname, 'src', 'pages', 'viewPlaylist.js'),
     searchPlaylists: path.resolve(__dirname, 'src', 'pages', 'searchPlaylists.js'),
     test: path.resolve(__dirname, 'src', 'pages', 'test.js'),
     home: path.resolve(__dirname, 'src', 'pages', 'home.js'),
     manageInventory: path.resolve(__dirname, 'src', 'pages', 'manageInventory.js'),
+    viewCar: path.resolve(__dirname, 'src', 'pages', 'viewCar.js')
+
   },
   output: {
     path: path.resolve(__dirname, 'build', 'assets'),

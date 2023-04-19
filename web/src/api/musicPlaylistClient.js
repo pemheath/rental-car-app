@@ -15,7 +15,7 @@ export default class MusicPlaylistClient extends BindingClass {
     constructor(props = {}) {
         super();
 
-        const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'getPlaylist', 'getPlaylistSongs', 'createPlaylist', 'search'];
+        const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'getPlaylist', 'getPlaylistSongs', 'createPlaylist', 'search', 'getCar'];
         this.bindClassMethods(methodsToBind, this);
 
         this.authenticator = new Authenticator();;
@@ -152,7 +152,7 @@ export default class MusicPlaylistClient extends BindingClass {
     }
 
     /**
-     * Search for a car.
+     * Search for a list of cars based on available criteria.
      * @param criteria A string containing search criteria to pass to the API.
      * @returns The cars that match the search criteria.
      */
@@ -174,6 +174,23 @@ export default class MusicPlaylistClient extends BindingClass {
         } catch (error) {
             this.handleError(error, errorCallback)
         }
+
+    }
+
+        /**
+         * Search for a car.
+         * @param VIN A string containing search VIN to pass to the API.
+         * @returns The car that matches the search criteria.
+         */
+
+    async getCar(vin, errorCallback) {
+        try {
+            const response = await this.axiosClient.get(`car/${vin}`);
+            console.log("response is");
+            console.log(response);
+            return response.data.car;
+        } catch (error) {
+            this.handleError(error, errorCallback)}
 
     }
 

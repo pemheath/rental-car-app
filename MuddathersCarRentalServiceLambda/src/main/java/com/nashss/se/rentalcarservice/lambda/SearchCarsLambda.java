@@ -22,7 +22,7 @@ public class SearchCarsLambda extends LambdaActivityRunner<SearchCarsRequest, Se
                                 .withCriteria(query.get("q"))
                                 .build();}),
                 (request, serviceComponent) ->
-                        serviceComponent.provideCarsActivity().handleRequest(request)
+                        serviceComponent.provideSearchCarsActivity().handleRequest(request)
         );
     }
 
