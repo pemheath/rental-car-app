@@ -77,7 +77,7 @@ public class Car {
         this.classOfVehicle = classOfVehicle;
     }
 
-    @DynamoDBAttribute(attributeName = "cost")
+    @DynamoDBAttribute(attributeName = "costPerDay")
     public BigDecimal getCostPerDay() {
         return costPerDay;
     }

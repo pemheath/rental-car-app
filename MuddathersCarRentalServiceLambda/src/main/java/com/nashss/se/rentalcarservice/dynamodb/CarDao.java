@@ -70,9 +70,22 @@ public class CarDao {
         }
         return car;
     }
+
     public Car removeCar(String VIN) {
         Car carToRemove = getCar(VIN);
         this.mapper.delete(carToRemove);
         return carToRemove;
+
+
+    /**
+     * Saves (creates or updates) the given car.
+     *
+     * @param car The car to save
+     * @return The Car object that was saved
+     */
+    public Car saveCar(Car car) {
+        this.mapper.save(car);
+        return car;
+
     }
 }

@@ -6,15 +6,18 @@ import dagger.Component;
 import javax.inject.Singleton;
 
 /**
- * Dagger component for providing dependency injection in the Music Playlist Service.
+ * Dagger component for providing dependency injection in the Car Rental Service.
  */
 @Singleton
 @Component(modules = {DaoModule.class, MetricsModule.class})
 public interface ServiceComponent {
 
-    SearchCarsActivity provideCarsActivity();
+    SearchCarsActivity provideSearchCarsActivity();
 
     GetCarActivity provideGetCarActivity();
 
     RemoveCarActivity provideRemoveCarActivity();
+
+    AddCarActivity provideAddCarActivity();
+
 }

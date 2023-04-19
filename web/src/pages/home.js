@@ -188,8 +188,7 @@ class Home extends BindingClass {
             html += `
             <tr>
                 <td>
-                    <a href="playlist.html?id=${res.id}">${res.vin}</a>
-                    // syn with kaden to get this to link to getcar endpoint
+                    <a href="car.html?vin=${res.vin}">${res.vin}</a>
                 </td>
                 <td>${res.availability}</td>
                 <td>${res.classOfVehicle}</td>
