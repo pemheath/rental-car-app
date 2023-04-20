@@ -15,7 +15,7 @@ export default class MusicPlaylistClient extends BindingClass {
     constructor(props = {}) {
         super();
 
-        const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'getPlaylist', 'getPlaylistSongs', 'createPlaylist', 'search', 'getCar'];
+        const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'getPlaylist', 'getPlaylistSongs', 'createPlaylist', 'search', 'getCar', 'updateCar'];
         this.bindClassMethods(methodsToBind, this);
 
         this.authenticator = new Authenticator();;
@@ -193,6 +193,23 @@ export default class MusicPlaylistClient extends BindingClass {
             this.handleError(error, errorCallback)}
 
     }
+
+        async updateCar(vin, availability, errorCallback) {
+            try {
+                const token = await this.getTokenOrThrow("Only authenticated users can update cars.");
+                const response = await this.axiosClient.put(`cars`, {
+                    vin: vin,
+                    availability: availability
+                }, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                return response.data.car;
+            } catch (error) {
+                this.handleError(error, errorCallback)
+            }
+        }
 
     /**
      * Helper method to log the error and run any error functions.
