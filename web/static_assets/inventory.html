@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script type="text/javascript" src="assets/createPlaylist.js"></script>
+    <script type="text/javascript" src="assets/manageInventory.js"></script>
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <title>Inventory Management Page</title>
 </head>
@@ -10,10 +10,10 @@
 <div class="card">
     <h2>Add Vehicle To Inventory</h2>
     <form class="card-content" id="create-playlist-form">
-        <p class="hidden error" id="error-message"> </p> <!--for when they are not an authenticated user-->
+        <p class="hidden error" id="error-message1"> </p> <!--for when they are not an authenticated user-->
         <p class = "form-field">
             <label>VIN </label>
-            <input type = "text" required class = "validated-field" id="VIN" placeholder ="17-digit VIN" autofocus>
+            <input type = "text" required class = "validated-field" id="VIN1" placeholder ="17-digit VIN" autofocus>
             <label>Class of Vehicle </label>
             <select name="cars" id="search-criteria-extra">
                 <option value = "SUV">SUV</option>

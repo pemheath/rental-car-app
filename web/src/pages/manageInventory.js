@@ -10,9 +10,8 @@ import DataStore from '../util/DataStore';
 class ManageInventory extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['mount', 'submit','redirectToViewCar', this]);
+        this.bindClassMethods(['mount', 'submit','redirectToViewCar'], this);
         this.dataStore = new DataStore();
-        this.dataStore.addChangeListener(this.redirectToViewCar);
         this.header = new Header(this.dataStore);
         }
 
@@ -35,7 +34,7 @@ class ManageInventory extends BindingClass {
              async submit(evt) {
                     evt.preventDefault();
 
-                    const errorMessageDisplay = document.getElementById('error-message');
+                    const errorMessageDisplay = document.getElementById('error-message1');
                     errorMessageDisplay.innerText = ``;
                     errorMessageDisplay.classList.add('hidden');
 
@@ -43,7 +42,7 @@ class ManageInventory extends BindingClass {
                     const origButtonText = createButton.innerText;
                     createButton.innerText = 'Loading...';
 
-                    const vin = document.getElementById('VIN').value;
+                    const vin = document.getElementById('VIN1').value;
                     const classOfVehicle = document.getElementById('search-criteria-extra').value;
                     const make = document.getElementById('make').value;
                     const model = document.getElementById('model').value;
@@ -58,17 +57,18 @@ class ManageInventory extends BindingClass {
                     });
                     console.log("the car we created is");
                     console.log(car);
-                    this.dataStore.set('car', car);
+                      window.location.href = `/car.html?vin=${car.vin}`;
+
                 }
 
 
                 /**
                  * When the playlist is updated in the datastore, redirect to the view playlist page.
                  */
-                redirectToViewPlaylist() {
+                redirectToViewCar() {
                     const playlist = this.dataStore.get('inventory');
                     if (inventory != null) {
-                        window.location.href = `/inventory.html?id=${car.VIN}`;
+                        window.location.href = `/inventory.html?id=${car.vin}`;
                     }
                 }
             }

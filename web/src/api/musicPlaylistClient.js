@@ -15,7 +15,7 @@ export default class MusicPlaylistClient extends BindingClass {
     constructor(props = {}) {
         super();
 
-        const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'getPlaylist', 'getPlaylistSongs', 'createPlaylist', 'search', 'getCar', 'addCar'];
+        const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'getPlaylist', 'addSongToPlaylist', 'getPlaylistSongs', 'createPlaylist', 'search', 'getCar', 'addCar', 'getTokenOrThrow'];
         this.bindClassMethods(methodsToBind, this);
 
         this.authenticator = new Authenticator();;
@@ -203,9 +203,8 @@ export default class MusicPlaylistClient extends BindingClass {
     async addCar(vin, classOfVehicle, make, model, capacity, year, costPerDay, errorCallback) {
     try {
         const token = await this.getTokenOrThrow("Only authenticated users can create a new car.");
-        const response = await this.axiosClient.post(`cars`, {
-            Vin: vin,
-            availability: "AVAILABLE",
+        const response = await this.axiosClient.post(`car`, {
+            vin: vin,
             classOfVehicle: classOfVehicle,
             make: make,
             model: model,
