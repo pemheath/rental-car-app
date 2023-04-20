@@ -13,18 +13,18 @@ class CreatePlaylist extends BindingClass {
         this.dataStore = new DataStore();
         this.dataStore.addChangeListener(this.redirectToViewPlaylist);
         this.header = new Header(this.dataStore);
-    }
+        }
 
-    /**
-     * Add the header to the page and load the MusicPlaylistClient.
-     */
-    mount() {
-        document.getElementById('create').addEventListener('click', this.submit);
+        /**
+         * Add the header to the page and load the MusicPlaylistClient.
+         */
+        mount() {
+            document.getElementById('create').addEventListener('click', this.submit);
 
-        this.header.addHeaderToPage();
+            this.header.addHeaderToPage();
 
-        this.client = new MusicPlaylistClient();
-    }
+            this.client = new MusicPlaylistClient();
+        }
 
     /**
      * Method to run when the create playlist submit button is pressed. Call the MusicPlaylistService to create the
