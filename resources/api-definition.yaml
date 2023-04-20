@@ -217,3 +217,53 @@ paths:
                           type: string
                         trackNumber:
                           type: integer
+
+
+  /car/{vin}:
+    put:
+      tags:
+        - Updates
+      summary: Updates the availability status of a car
+      operationId: updateCar
+      parameters:
+        - name: VIN
+          in: path
+          description: VIN of playlist to return
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                VIN:
+                  type: string
+                availability:
+                  type: string
+
+      responses:
+        "200":
+          description: A car object
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                    VIN:
+                      type: string
+                    availability:
+                      type: AvailabilityEnum
+                    capacity:
+                      type: integer
+                    classOfVehicle:
+                      type: string
+                    costPerDay:
+                      type: BigDecimal
+                    make:
+                      type: string
+                    model:
+                      type: string
+                    year:
+                      type: string

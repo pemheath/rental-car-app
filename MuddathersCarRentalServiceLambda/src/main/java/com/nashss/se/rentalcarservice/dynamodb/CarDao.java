@@ -62,6 +62,13 @@ public class CarDao {
         return carList;
     }
 
+    /**
+     * Returns a car from the dynamoDB Cars table
+     * @param VIN, the vin for the car to load
+     * @return Car
+     * @thros CarNotFoundException if the VIN does not match a vin already in the car table
+     */
+
     public Car getCar(String VIN) {
         Car car = this.mapper.load(Car.class, VIN);
 
@@ -73,7 +80,6 @@ public class CarDao {
 
     /**
      * Saves (creates or updates) the given car.
-     *
      * @param car The car to save
      * @return The Car object that was saved
      */
