@@ -217,6 +217,26 @@ Resources:
                 Action: dynamodb:*
                 Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/album_tracks"
 
+        - PolicyName: 'AccessCarsTable'
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action: dynamodb:*
+                Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/cars"
+              - Effect: Allow
+                Action:
+                  - dynamodb:Query
+                Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/cars/index/AvailabilityClassIndex"
+
+        - PolicyName: 'AccessTransactionsTable'
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action: dynamodb:*
+                Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/transactions"
+
   #-----------------------------------------------------
   # Lambda Functions Configuration
   #-----------------------------------------------------
