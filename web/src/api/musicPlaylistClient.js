@@ -15,7 +15,7 @@ export default class MusicPlaylistClient extends BindingClass {
     constructor(props = {}) {
         super();
 
-        const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'getPlaylist', 'getPlaylistSongs', 'createPlaylist', 'search', 'getCar'];
+        const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'getPlaylist', 'getPlaylistSongs', 'createPlaylist', 'search', 'getCar','deleteCar'];
         this.bindClassMethods(methodsToBind, this);
 
         this.authenticator = new Authenticator();;
@@ -193,6 +193,22 @@ export default class MusicPlaylistClient extends BindingClass {
             this.handleError(error, errorCallback)}
 
     }
+     /**
+             * delete a car.
+             * @param VIN A string containing search VIN to pass to the API.
+             * @returns The car that matches the search criteria.
+             */
+
+        async deleteCar(vin, errorCallback) {
+            try {
+                const response = await this.axiosClient.delete(`car/${vin}`);
+                console.log("response is");
+                console.log(response);
+                return response.data.car;
+            } catch (error) {
+                this.handleError(error, errorCallback)}
+
+        }
 
     /**
      * Helper method to log the error and run any error functions.

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script type="text/javascript" src="assets/createPlaylist.js"></script>
+    <script type="text/javascript" src="assets/removeCar.js"></script>
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <title>Inventory Management Page</title>
 </head>
@@ -42,23 +42,28 @@
 <div class="card">
     <h2>Remove Vehicle From Inventory</h2>
     <form class="card-content" id="remove-vehicle">
-        <p class="hidden error" id="error-message"> </p> <!--for when they are not an authenticated user-->
+        <p class="hidden error" id="error-message-remove"> </p> <!--for when they are not an authenticated user-->
         <p class = "form-field">
             <label>Enter the VIN of the Vehicle You Wish To Remove </label>
-            <input type = "text" required class = "validated-field" id="VIN" placeholder ="17-digit VIN" autofocus>
+            <input type = "text" required class = "validated-field" id="vin-for-delete" placeholder ="17-digit VIN" autofocus>
             <label>Re-enter the VIN (Note - this action is Permanent and cannot be undone)</label>
             <input type = "text" required class = "validated-field" id="VIN" placeholder ="17-digit VIN" autofocus>
             <label> Please confirm by typing "CONFIRM"</label>
             <input type = "text" required class = "validated-field" id = "confirmation" placeholder="case sensitive" autofocus>
         </p>
         <p class="button-group">
-            <a href="#" class = "button"  id="create"> REMOVE Vehicle From Inventory (!! FINAL ACTION) </a>
+            <a href="#" class = "button"  id="remove"> REMOVE Vehicle From Inventory (!! FINAL ACTION) </a>
         </p>
     </form>
 </div>
 <div class="card hidden" id='search-results-container'>
     <h3>Results for <span id="search-criteria-display"></span></h3>
     <div id="search-results-display">
+    </div>
+</div>
+<div class="card hidden" id='remove-car-container'>
+    <h3>Results for delete</h3>
+    <div id="remove-car-display">
     </div>
 </div>
 
