@@ -16,12 +16,18 @@
 
 .header {
     /* Flexbox: https://css-tricks.com/snippets/css/a-guide-to-flexbox/ */
+    text-align: center;
     display: flex;
+    flex-direction:;
     justify-content: space-between;
-    align-items: center;
     background-color: var(--primary-color);
     color: var(--secondary-color);
     padding: 4px 20px;
+    justify-content: center;
+}
+.gif-image {
+  width: 90px;
+  height: 90px;
 }
 
 .button {
@@ -41,11 +47,12 @@
 }
 
 .header_home {
-    font-size: 36px;
-    line-height: 40px;
+    font-size: 24px;
+    line-height: 36px;
     height: 100px;
     text-decoration: none;
     color: var(--secondary-color);
+    font-family: "Impact", fantasy;
 }
 
 .card {
