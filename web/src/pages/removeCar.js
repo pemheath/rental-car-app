@@ -51,9 +51,9 @@ class RemoveCar extends BindingClass {
     mount() {
         document.getElementById("remove").addEventListener('click',this.removeCar);
        // document.getElementById('view-car').addEventListener('click', this.getCar);
-        this.header.addHeaderToPage();
+
         this.client = new MusicPlaylistClient();
-        this.clientLoaded();
+
     }
 
 
@@ -63,7 +63,7 @@ class RemoveCar extends BindingClass {
     async removeCar (){
 
         const errorMessageDisplay = document.getElementById('error-message-remove');
-        errorMessageDisplay.innerText = ``;
+        errorMessageDisplay.innerText = '';
         errorMessageDisplay.classList.add('hidden');
 
         const vinDelete = document.getElementById('vin-for-delete').value;
@@ -75,9 +75,7 @@ class RemoveCar extends BindingClass {
             if (carResult==null){
                 errorMessageDisplay.innerText = `No Car Found`;
                 errorMessageDisplay.classList.remove('hidden');
-                document.getElementById('car-name').innerText = "No Car Found";
 
-                createButton.innerText = 'Search New Car';
 
                 const searchResultsContainer = document.getElementById('search-results-container');
                 const searchCriteriaDisplay = document.getElementById('search-criteria-display');

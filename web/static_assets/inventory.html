@@ -46,10 +46,10 @@
         <p class = "form-field">
             <label>Enter the VIN of the Vehicle You Wish To Remove </label>
             <input type = "text" required class = "validated-field" id="vin-for-delete" placeholder ="17-digit VIN" autofocus>
-            <label>Re-enter the VIN (Note - this action is Permanent and cannot be undone)</label>
-            <input type = "text" required class = "validated-field" id="VIN" placeholder ="17-digit VIN" autofocus>
-            <label> Please confirm by typing "CONFIRM"</label>
-            <input type = "text" required class = "validated-field" id = "confirmation" placeholder="case sensitive" autofocus>
+            <label hidden>Re-enter the VIN (Note - this action is Permanent and cannot be undone)</label>
+            <input hidden type = "text" required class = "validated-field" id="VIN-confirm" placeholder ="17-digit VIN" autofocus>
+            <label hidden> Please confirm by typing "CONFIRM"</label>
+            <input hidden type = "text" required class = "validated-field" id = "confirmation" placeholder="case sensitive" autofocus>
         </p>
         <p class="button-group">
             <a href="#" class = "button"  id="remove"> REMOVE Vehicle From Inventory (!! FINAL ACTION) </a>
