@@ -29,7 +29,8 @@ module.exports = {
     test: path.resolve(__dirname, 'src', 'pages', 'test.js'),
     home: path.resolve(__dirname, 'src', 'pages', 'home.js'),
     manageInventory: path.resolve(__dirname, 'src', 'pages', 'manageInventory.js'),
-    viewCar: path.resolve(__dirname, 'src', 'pages', 'viewCar.js')
+    viewCar: path.resolve(__dirname, 'src', 'pages', 'viewCar.js'),
+    updateCar: path.resolve(__dirname, 'src', 'pages', 'updateCar.js')
 
   },
   output: {
