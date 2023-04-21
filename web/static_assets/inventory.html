@@ -1,12 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+    <script type="text/javascript" src="assets/removeCar.js"></script>
     <script type="text/javascript" src="assets/manageInventory.js"></script>
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <title>Inventory Management Page</title>
 </head>
 <body class="background">
 <header class="header" id="header"></header>
+<div class = "topnav" id="link-bar"></div>
+<div class = "card">
+    <a href="updateCar.html" class="button">Check-In/Check-Out</a>
+    <a href="inventory.html" class="button">Manage Inventory</a>
+    <a href="car.html" class="button">View Car By VIN</a>
+</div>
 <div class="card">
     <h2>Add Vehicle To Inventory</h2>
     <form class="card-content" id="create-playlist-form">
@@ -42,17 +50,17 @@
 <div class="card">
     <h2>Remove Vehicle From Inventory</h2>
     <form class="card-content" id="remove-vehicle">
-        <p class="hidden error" id="error-message"> </p> <!--for when they are not an authenticated user-->
+        <p class="hidden error" id="error-message-remove"> </p> <!--for when they are not an authenticated user-->
         <p class = "form-field">
             <label>Enter the VIN of the Vehicle You Wish To Remove </label>
-            <input type = "text" required class = "validated-field" id="VIN" placeholder ="17-digit VIN" autofocus>
-            <label>Re-enter the VIN (Note - this action is Permanent and cannot be undone)</label>
-            <input type = "text" required class = "validated-field" id="VIN" placeholder ="17-digit VIN" autofocus>
-            <label> Please confirm by typing "CONFIRM"</label>
-            <input type = "text" required class = "validated-field" id = "confirmation" placeholder="case sensitive" autofocus>
+            <input type = "text" required class = "validated-field" id="vin-for-delete" placeholder ="17-digit VIN" autofocus>
+            <label hidden>Re-enter the VIN (Note - this action is Permanent and cannot be undone)</label>
+            <input hidden type = "text" required class = "validated-field" id="VIN-confirm" placeholder ="17-digit VIN" autofocus>
+            <label hidden> Please confirm by typing "CONFIRM"</label>
+            <input hidden type = "text" required class = "validated-field" id = "confirmation" placeholder="case sensitive" autofocus>
         </p>
         <p class="button-group">
-            <a href="#" class = "button"  id="create"> REMOVE Vehicle From Inventory (!! FINAL ACTION) </a>
+            <a href="#" class = "button"  id="remove"> REMOVE Vehicle From Inventory (!! FINAL ACTION) </a>
         </p>
     </form>
 </div>
@@ -60,6 +68,12 @@
     <h3>Results for <span id="search-criteria-display"></span></h3>
     <div id="search-results-display">
     </div>
+</div>
+<div class="card hidden" id='remove-car-container'>
+    <h3><span id = "delete-criteria"></span></h3>
+    <div id="remove-car-display">
+    </div>
+    <a href="index.html" class="button" id="return-home">View Current Available Inventory</a>
 </div>
 
 </body>

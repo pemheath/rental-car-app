@@ -39,7 +39,9 @@ public class RemoveCarActivity {
     public RemoveCarResult handleRequest(final RemoveCarRequest removeCarRequest) {
         log.info("Received RemoveCarRequest {}", removeCarRequest);
         String requestedVIN = removeCarRequest.getVIN();
+        log.info("Requested vin from request is {}", requestedVIN);
         Car car = carDao.removeCar(requestedVIN);
+        log.info("Removed car from carDao {}", car);
         CarModel carModel = new ModelConverter().toCarModel(car);
         return RemoveCarResult.builder()
                 .withCar(carModel)
