@@ -1,17 +1,17 @@
 package com.nashss.se.rentalcarservice.activity.requests;
 
-import com.fasterxml.jackson.annotation.JsonEnumDefaultValue;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.nashss.se.rentalcarservice.models.AvailabilityEnum;
 
+import java.math.BigDecimal;
+
 @JsonDeserialize(builder = UpdateCarRequest.Builder.class)
 public class UpdateCarRequest {
 
     private final String VIN;
-
-
+    private final BigDecimal costPerDay;
     private final AvailabilityEnum availability;
 
     /**
@@ -21,10 +21,9 @@ public class UpdateCarRequest {
      * Creates an update car request
      */
 
-    private UpdateCarRequest(String VIN, AvailabilityEnum availability) {
-
+    private UpdateCarRequest(String VIN, BigDecimal costPerDay, AvailabilityEnum availability) {
         this.VIN = VIN;
-
+        this.costPerDay = costPerDay;
         this.availability = availability;
     }
 
@@ -32,21 +31,28 @@ public class UpdateCarRequest {
         return this.VIN;
     }
 
+    public BigDecimal getCostPerDay() {
+        return costPerDay;
+    }
+
     @JsonValue
-    public AvailabilityEnum getAvailability() {return this.availability;}
+    public AvailabilityEnum getAvailability() {
+        return this.availability;
+    }
+
+    @Override
+    public String toString() {
+        return "UpdateCarRequest{" +
+                "VIN='" + VIN + '\'' +
+                ", costPerDay=" + costPerDay +
+                ", availability=" + availability +
+                '}';
+    }
 
     /**
      *
      * @return a JSON styled request object
      */
-    @Override
-    public String toString() {
-        return "UpdateCarRequest{" +
-                "VIN='" + VIN + '\'' +
-                "availability='" + availability +
-                '}';
-    }
-
     public static Builder builder() {
         return new Builder();
     }
@@ -54,11 +60,16 @@ public class UpdateCarRequest {
     @JsonPOJOBuilder
     public static class Builder {
         private String VIN;
-
+        private BigDecimal costPerDay;
         private AvailabilityEnum availability;
 
         public Builder withVin(String VIN) {
             this.VIN = VIN;
+            return this;
+        }
+
+        public Builder withCostPerDay(BigDecimal costPerDay) {
+            this.costPerDay = costPerDay;
             return this;
         }
 
@@ -68,7 +79,7 @@ public class UpdateCarRequest {
         }
 
         public UpdateCarRequest build() {
-            return new UpdateCarRequest(VIN, availability);
+            return new UpdateCarRequest(VIN, costPerDay, availability);
         }
     }
 }

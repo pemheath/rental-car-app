@@ -1,6 +1,5 @@
 package com.nashss.se.rentalcarservice.activity.results;
 
-import com.nashss.se.rentalcarservice.activity.requests.UpdateCarRequest;
 import com.nashss.se.rentalcarservice.models.CarModel;
 
 public class UpdateCarResult {
