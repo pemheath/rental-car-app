@@ -36,15 +36,34 @@ export default class Header extends BindingClass {
 
     }
 
+
     createSiteTitle() {
+        // Create the site title container div
+        const siteTitle = document.createElement('div');
+        siteTitle.classList.add('site-title');
+        // Create the GIF image element #1
+          const gifImage = document.createElement('img');
+            gifImage.src = 'https://media.giphy.com/media/bKa7IXHj65ywvTwnbx/giphy.gif';
+            gifImage.classList.add('gif-image');
+            // Create the GIF image element #2
+            const gifImage2 = document.createElement('img');
+            gifImage2.src = 'https://media.giphy.com/media/bKa7IXHj65ywvTwnbx/giphy.gif';
+            gifImage2.classList.add('gif-image');
+
+            //style the GIF images
+            gifImage.style.float = 'left';
+
+
+         // Create the home button
         const homeButton = document.createElement('a');
         homeButton.classList.add('header_home');
         homeButton.href = 'index.html';
-        homeButton.innerText = 'Car Rental Service';
+        homeButton.innerText = "Muddather\'s Car Rental Service";
 
-        const siteTitle = document.createElement('div');
-        siteTitle.classList.add('site-title');
+        siteTitle.appendChild(gifImage);
         siteTitle.appendChild(homeButton);
+        siteTitle.appendChild(gifImage2);
+
         return siteTitle;
     }
 
