@@ -15,7 +15,8 @@ export default class MusicPlaylistClient extends BindingClass {
     constructor(props = {}) {
         super();
 
-        const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'getPlaylist', 'getPlaylistSongs', 'createPlaylist', 'search', 'getCar','deleteCar'];
+        const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'getPlaylist', 'getPlaylistSongs', 'createPlaylist', 'search', 'getCar','deleteCar', 'addCar'];
+
         this.bindClassMethods(methodsToBind, this);
 
         this.authenticator = new Authenticator();;
@@ -111,19 +112,19 @@ export default class MusicPlaylistClient extends BindingClass {
      */
     async createPlaylist(name, tags, errorCallback) {
         try {
-            const token = await this.getTokenOrThrow("Only authenticated users can create playlists.");
-            const response = await this.axiosClient.post(`playlists`, {
-                name: name,
-                tags: tags
-            }, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
-            return response.data.playlist;
-        } catch (error) {
-            this.handleError(error, errorCallback)
-        }
+                     const token = await this.getTokenOrThrow("Only authenticated users can create playlists.");
+                     const response = await this.axiosClient.post(`playlists`, {
+                         name: name,
+                         tags: tags
+                     }, {
+                         headers: {
+                             Authorization: `Bearer ${token}`
+                         }
+                     });
+                     return response.data.playlist;
+                 } catch (error) {
+                     this.handleError(error, errorCallback)
+                 }
     }
 
     /**
@@ -209,6 +210,51 @@ export default class MusicPlaylistClient extends BindingClass {
                 this.handleError(error, errorCallback)}
 
         }
+
+
+      /**
+             * Add a car.
+             * @param vin, class, make, model, capacity, year, costPerDay to pass to the API.
+             * @returns The new car.
+             */
+
+    async addCar(vin, classOfVehicle, make, model, capacity, year, costPerDay, errorCallback) {
+    try {
+        const token = await this.getTokenOrThrow("Only authenticated users can create a new car.");
+        const response = await this.axiosClient.post(`car`, {
+            vin: vin,
+            classOfVehicle: classOfVehicle,
+            make: make,
+            model: model,
+            capacity: capacity,
+            year: year,
+            costPerDay: costPerDay
+            });
+
+        return response.data.car;
+    } catch (error) {
+        this.handleError(error, errorCallback);
+    }
+
+    }
+
+        async updateCar(vin, availability, errorCallback) {
+            try {
+                const token = await this.getTokenOrThrow("Only authenticated users can update cars.");
+                const response = await this.axiosClient.put(`car/${vin}`, {
+                    vin: vin,
+                    availability: availability
+                }, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                return response.data.car;
+            } catch (error) {
+                this.handleError(error, errorCallback)
+            }
+        }
+
 
     /**
      * Helper method to log the error and run any error functions.

@@ -217,6 +217,26 @@ Resources:
                 Action: dynamodb:*
                 Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/album_tracks"
 
+        - PolicyName: 'AccessCarsTable'
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action: dynamodb:*
+                Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/cars"
+              - Effect: Allow
+                Action:
+                  - dynamodb:Query
+                Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/cars/index/AvailabilityClassIndex"
+
+        - PolicyName: 'AccessTransactionsTable'
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action: dynamodb:*
+                Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/transactions"
+
   #-----------------------------------------------------
   # Lambda Functions Configuration
   #-----------------------------------------------------
@@ -430,6 +450,27 @@ Resources:
           Properties:
             Path: /car
             Method: post
+
+  UpdateCarLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: !GetAtt AccessRole.Arn
+      CodeUri: MuddathersCarRentalServiceLambda
+      Handler: com.nashss.se.rentalcarservice.lambda.UpdateCarLambda::handleRequest
+      Runtime: java11
+      Architectures:
+        - x86_64
+      MemorySize: 512
+      Environment:
+        Variables:
+          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+      Events:
+        MusicPlaylistService:
+          Type: Api
+          Properties:
+            Path: /car/{vin}
+            Method: put
+
 
   #-----------------------------------------------------
   # DynamoDB Configuration

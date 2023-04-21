@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Transactions</title>
+    <script type="text/javascript" src="assets/updateCar.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body class="background">
+    <header class="header" id="header"></header>
+    <div class="card">
+        <h2>Manage Rentals</h2>
+        <form class="card-content" id="update-car-form">
+            <p class="hidden error" id="error-message"> </p> <!--for when they are not an authenticated user-->
+            <label>VIN to Check-In/Check-Out</label>
+            <input type="text" id="vin"><br><br>
+            <label>Choose Status</label>
+            <select name="cars" id="availability">
+                <option value = "AVAILABLE">Available</option>
+                <option value = "RENTED">Rented</option>
+                <option value = "MAINTENANCE">Maintenance</option>
+            </select><br><br>
+        </form>
+        <a href="#" class="button" id="update-button">Update Car</a>
+    </div>
+
+    <div class="card hidden" id='search-results-container'>
+        <h3>Result for Updated Car</h3>
+        <div id="search-results-display">
+        </div>
+    </div>
+</body>
+
+</html>
