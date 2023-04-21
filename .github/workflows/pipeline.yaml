@@ -10,7 +10,7 @@ env:
 
   # STUDENTS: Set these environment variables 
   API_BASE_URL: https://hf71pq4wj8.execute-api.us-east-2.amazonaws.com/Prod/
-  COGNITO_DOMAIN: car-rental-group-team.auth.us-east-2.amazoncognito.com
+  COGNITO_DOMAIN: rental-car-service-team.auth.us-east-2.amazoncognito.com
   COGNITO_REDIRECT_SIGNIN: https://d2r11z12vu3xbx.cloudfront.net
   COGNITO_REDIRECT_SIGNOUT: https://d2r11z12vu3xbx.cloudfront.net
 
