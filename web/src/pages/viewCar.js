@@ -53,7 +53,6 @@ class ViewCar extends BindingClass {
              [SEARCH_RESULTS_KEY]: car,
          });
          document.getElementById('car-name').innerText = "CAR FOUND!";
-         console.log(dataStore.get(SEARCH_RESULTS_KEY));
      }
 
     }

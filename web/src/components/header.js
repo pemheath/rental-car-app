@@ -10,7 +10,7 @@ export default class Header extends BindingClass {
 
         const methodsToBind = [
             'addHeaderToPage', 'createSiteTitle', 'createUserInfoForHeader',
-            'createLoginButton', 'createLoginButton', 'createLogoutButton'
+            'createLoginButton', 'createLoginButton', 'createLogoutButton', 'createLinkBar'
         ];
         this.bindClassMethods(methodsToBind, this);
 
@@ -25,12 +25,15 @@ export default class Header extends BindingClass {
         const currentUser = await this.client.getIdentity();
 
         const siteTitle = this.createSiteTitle();
+        const linkBarContents = this.createLinkBar();
         const userInfo = this.createUserInfoForHeader(currentUser);
 
         const header = document.getElementById('header');
+        const linkBar = document.getElementById('link-bar');
         header.appendChild(siteTitle);
-        console.log("added header");
         header.appendChild(userInfo);
+        linkBar.appendChild(linkBarContents);
+
     }
 
     createSiteTitle() {
@@ -42,8 +45,28 @@ export default class Header extends BindingClass {
         const siteTitle = document.createElement('div');
         siteTitle.classList.add('site-title');
         siteTitle.appendChild(homeButton);
-
         return siteTitle;
+    }
+
+    createLinkBar() {
+    const linkBar = document.createElement('p');
+        linkBar.classList.add('button-group');
+
+        const inventoryButton = document.createElement('a');
+        inventoryButton.href = 'inventory.html';
+        inventoryButton.innerText = 'Manage Inventory';
+        const updateButton = document.createElement('a');
+        updateButton.href = 'updateCar.html';
+        updateButton.innerText = 'Update Existing Cars';
+        const searchByVinButton = document.createElement('a');
+        searchByVinButton.href = 'car.html';
+        searchByVinButton.innerText = 'Search Cars by VIN';
+
+        linkBar.appendChild(inventoryButton);
+        linkBar.appendChild(updateButton);
+        linkBar.appendChild(searchByVinButton);
+        return linkBar;
+
     }
 
     createUserInfoForHeader(currentUser) {

@@ -10,7 +10,7 @@ import DataStore from '../util/DataStore';
 class ManageInventory extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['mount', 'submit','redirectToViewCar'], this);
+        this.bindClassMethods(['mount', 'submit'], this);
         this.dataStore = new DataStore();
         this.header = new Header(this.dataStore);
         }
@@ -61,16 +61,6 @@ class ManageInventory extends BindingClass {
 
                 }
 
-
-                /**
-                 * When the playlist is updated in the datastore, redirect to the view playlist page.
-                 */
-                redirectToViewCar() {
-                    const playlist = this.dataStore.get('inventory');
-                    if (inventory != null) {
-                        window.location.href = `/inventory.html?id=${car.vin}`;
-                    }
-                }
             }
 
             /**

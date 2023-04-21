@@ -6,6 +6,8 @@ import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedQueryList;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.nashss.se.rentalcarservice.dynamodb.models.Car;
 import com.nashss.se.rentalcarservice.exceptions.CarNotFoundException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.inject.Inject;
 import java.util.*;
@@ -14,6 +16,8 @@ public class CarDao {
 
     private static final String CAR_AVAILABILITY_INDEX = "AvailabilityClassIndex";
     private final DynamoDBMapper mapper;
+
+    private final Logger log = LogManager.getLogger();
 
     @Inject
     public CarDao(DynamoDBMapper mapper) {
@@ -79,8 +83,17 @@ public class CarDao {
     }
 
     public Car removeCar(String VIN) {
-        Car carToRemove = getCar(VIN);
+
+        Car carToRemove;
+        try {
+            carToRemove = getCar(VIN);
+        } catch (CarNotFoundException e) {
+            throw new CarNotFoundException(String.format("No car was deleted because inventory does " +
+                    "not contain a car with vin %s",VIN), e);
+        }
+        log.info("getCar was called on {} and returned {}", VIN, carToRemove);
         this.mapper.delete(carToRemove);
+        log.info("delete method called on {}", carToRemove);
         return carToRemove;
     }
 

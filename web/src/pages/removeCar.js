@@ -16,34 +16,12 @@ const EMPTY_DATASTORE_STATE = {
 class RemoveCar extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['clientLoaded', 'mount', 'removeCar'], this);
+        this.bindClassMethods(['mount', 'removeCar'], this);
 
         this.dataStore = new DataStore(EMPTY_DATASTORE_STATE);
         console.log("RemoveCar constructor");
     }
 
-    /**
-     * Once the client is loaded, get the playlist metadata and song list.
-     */
-    async clientLoaded() {
-     console.log("calling client loaded");
-
-     const urlParams = new URLSearchParams(window.location.search);
-     const vin = urlParams.get('vin');
-
-     if(vin){
-         document.getElementById('car-name').innerText = "Loading Car ...";
-         const car = await this.client.getCar(vin);
-         console.log(car);
-         this.dataStore.setState({
-             [SEARCH_CRITERIA_KEY]: vin,
-             [SEARCH_RESULTS_KEY]: car,
-         });
-         document.getElementById('car-name').innerText = "CAR FOUND!";
-         console.log(dataStore.get(SEARCH_RESULTS_KEY));
-     }
-
-    }
 
     /**
      * Add the header to the page and load the MusicPlaylistClient.
@@ -56,38 +34,28 @@ class RemoveCar extends BindingClass {
 
     }
 
-
-
-
-
     async removeCar (){
 
         const errorMessageDisplay = document.getElementById('error-message-remove');
         errorMessageDisplay.innerText = '';
         errorMessageDisplay.classList.add('hidden');
 
+        const deleteResultsContainer = document.getElementById('remove-car-container');
+        const deleteCriteriaDisplay = document.getElementById('delete-criteria');
+        const deleteResultsDisplay = document.getElementById('remove-car-display');
+
         const vinDelete = document.getElementById('vin-for-delete').value;
-        console.log("vin is");
-        console.log(vinDelete);
 
-        if (vinDelete) {
-            const carResult = await this.client.deleteCar(vinDelete);
-            if (carResult==null){
-                errorMessageDisplay.innerText = `No Car Found`;
-                errorMessageDisplay.classList.remove('hidden');
+        const carResult = await this.client.deleteCar(vinDelete, (error) => {
+            errorMessageDisplay.innerText = `Error: ${error.message}`;
+            errorMessageDisplay.classList.remove('hidden');
 
+            deleteResultsContainer.classList.add('hidden');
+            deleteCriteriaDisplay.innerHTML = '';
+            deleteResultsDisplay.innerHTML = '';
+            });
 
-                const searchResultsContainer = document.getElementById('search-results-container');
-                const searchCriteriaDisplay = document.getElementById('search-criteria-display');
-                const searchResultsDisplay = document.getElementById('search-results-display');
-
-                searchResultsContainer.classList.add('hidden');
-                searchCriteriaDisplay.innerHTML = '';
-                searchResultsDisplay.innerHTML = '';
-
-            }
-
-                let html = '<table><tr><th>Make</th><th>Model</th><th>Year</th><th>Class</th><th>Capacity</th><th>Availability</th><th>CostPerDay</th></tr>' +
+        const html = '<table><tr><th>Make</th><th>Model</th><th>Year</th><th>Class</th><th>Capacity</th><th>Availability</th><th>CostPerDay</th></tr>' +
                     '<tr><td>'+ carResult.make + '</td>' +
                      '<td>'+ carResult.model + '</td>'  +
                      '<td>'+ carResult.year + '</td>'  +
@@ -97,18 +65,13 @@ class RemoveCar extends BindingClass {
                      '<td>'+ carResult.costPerDay + '</td></tr>'
                       '</table>';
 
-            document.getElementById('remove-car-display').innerText = html;
-            console.log(dataStore.get(SEARCH_RESULTS_KEY));
-        }
+        deleteResultsContainer.classList.remove('hidden');
+        deleteCriteriaDisplay.innerHTML = '<p> The below car has now been deleted and no longer exists in inventory</p>';
+        deleteResultsDisplay.innerHTML = html;
+      }
+
     }
 
-   /**
-     * Create appropriate HTML for displaying searchResults on the page.
-     * @param searchResults An array of playlists objects to be displayed on the page.
-     * @returns A string of HTML suitable for being dropped on the page.
-     */
-
-}
 
 /**
  * Main method to run when the page contents have loaded.
