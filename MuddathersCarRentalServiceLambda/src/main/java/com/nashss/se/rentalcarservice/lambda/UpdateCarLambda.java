@@ -15,23 +15,21 @@ public class UpdateCarLambda extends LambdaActivityRunner<UpdateCarRequest, Upda
 
     @Override
     public LambdaResponse handleRequest(AuthenticatedLambdaRequest<UpdateCarRequest> input, Context context){
-
         log.info("Our input to UpdateCarLambda: '{}'", input.toString());
-
 
         return super.runActivity(
                 () -> {
                     UpdateCarRequest authenticatedRequest = input.fromBody(UpdateCarRequest.class);
                     log.info("Out UpdateCarRequest: '{}'", authenticatedRequest.toString());
+
                     return UpdateCarRequest.builder()
                             .withVin(authenticatedRequest.getVIN())
                             .withAvailability(authenticatedRequest.getAvailability())
+                            .withCostPerDay(authenticatedRequest.getCostPerDay())
                             .build();
                 },
                 (request, serviceComponent) ->
-                        serviceComponent.provideUpdateCarActivity().handleRequest(request)
-
-        ) ;
+                        serviceComponent.provideUpdateCarActivity().handleRequest(request));
     }
 
 

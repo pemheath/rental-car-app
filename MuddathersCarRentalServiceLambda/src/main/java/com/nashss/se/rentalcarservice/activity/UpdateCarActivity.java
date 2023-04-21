@@ -20,10 +20,7 @@ import javax.inject.Inject;
 public class UpdateCarActivity {
     private final Logger log = LogManager.getLogger();
     private final CarDao carDao;
-
     private final MetricsPublisher metricsPublisher;
-
-
 
     /**
      * Instantiates a new UpdateCarActivity object.
@@ -33,7 +30,6 @@ public class UpdateCarActivity {
      */
     @Inject
     public UpdateCarActivity(CarDao carDao, MetricsPublisher metricsPublisher) {
-        //super(UpdatePlaylistRequest.class);
         this.carDao = carDao;
         this.metricsPublisher = metricsPublisher;
     }
@@ -52,24 +48,30 @@ public class UpdateCarActivity {
      */
     public UpdateCarResult handleRequest(final UpdateCarRequest updateCarRequest) {
         log.info("Received UpdateCarRequest {}", updateCarRequest);
-
         Car car;
+
         try {
             car = carDao.getCar(updateCarRequest.getVIN());
-        } catch (CarNotFoundException e) {
+        }
+        catch (CarNotFoundException e) {
             publishExceptionMetrics(true);
             throw new CarNotFoundException("You attempted to update a car that does not exist", e.getCause());
         }
         publishExceptionMetrics(false);
 
         car.setAvailability(updateCarRequest.getAvailability());
-        car = carDao.saveCar(car);
 
+        if (updateCarRequest.getCostPerDay() != null) {
+            car.setCostPerDay(updateCarRequest.getCostPerDay());
+        }
+
+        car = carDao.saveCar(car);
 
         return UpdateCarResult.builder()
                 .withCar(new ModelConverter().toCarModel(car))
                 .build();
     }
+
     /**
      * Helper method to publish exception metrics.
      * @param isCarNotFound indicates whether CarNotFound is thrown
@@ -77,7 +79,5 @@ public class UpdateCarActivity {
     private void publishExceptionMetrics(final boolean isCarNotFound) {
         metricsPublisher.addCount(MetricsConstants.GETCAR_CARNOTFOUND_COUNT,
                 isCarNotFound ? 1 : 0);
-
     }
-
 }
