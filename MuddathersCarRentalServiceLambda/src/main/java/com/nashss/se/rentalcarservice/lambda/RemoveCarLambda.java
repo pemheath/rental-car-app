@@ -10,10 +10,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class RemoveCarLambda extends LambdaActivityRunner<RemoveCarRequest, RemoveCarResult>
-        implements RequestHandler<LambdaRequest<RemoveCarRequest>, LambdaResponse> {
+        implements RequestHandler<AuthenticatedLambdaRequest<RemoveCarRequest>, LambdaResponse> {
     private final Logger log = LogManager.getLogger();
     @Override
-    public LambdaResponse handleRequest(LambdaRequest<RemoveCarRequest> input, Context context) {
+    public LambdaResponse handleRequest(AuthenticatedLambdaRequest<RemoveCarRequest> input, Context context) {
         //takes data coming in as input , converts that data into a request object in your activity (GetCarRequest)
         log.info("handleRequest");
         return super.runActivity( //this returns lambda response

@@ -431,7 +431,6 @@ Resources:
             Path: /car/{vin}
             Method: delete
 
-
   AddCarLambda:
     Type: AWS::Serverless::Function
     Properties:
@@ -451,7 +450,6 @@ Resources:
           Properties:
             Path: /car
             Method: post
-
 
   UpdateCarLambda:
     Type: AWS::Serverless::Function
