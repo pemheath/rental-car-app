@@ -430,8 +430,7 @@ Resources:
           Properties:
             Path: /car/{vin}
             Method: delete
-            Auth:
-              Authorizer: 'NONE'
+
 
   AddCarLambda:
     Type: AWS::Serverless::Function
@@ -452,8 +451,7 @@ Resources:
           Properties:
             Path: /car
             Method: post
-            Auth:
-              Authorizer: 'NONE'
+
 
   UpdateCarLambda:
     Type: AWS::Serverless::Function
