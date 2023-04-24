@@ -50,7 +50,6 @@ export default class Header extends BindingClass {
             //style the GIF images
             gifImage.style.float = 'left';
             // Append the GIF image to the site title container
-            siteTitle.appendChild(gifImage);
 
 
          // Create the home button
@@ -61,8 +60,8 @@ export default class Header extends BindingClass {
 
         // appended home button to site title
         siteTitle.appendChild(homeButton);
-        siteTitle.appendChild(gifImage2);
-
+        siteTitle.appendChild(gifImage);
+                    siteTitle.appendChild(gifImage2);
         return siteTitle;
     }
 

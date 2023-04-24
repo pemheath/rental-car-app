@@ -79,6 +79,12 @@
     max-width: 500px;
 }
 
+.logo-container img {
+  width: 100px;
+  height: 100px;
+  font-family: "Impact", fantasy;
+}
+
 .card-content .form-field {
     display: flex;
     flex-direction: column;
