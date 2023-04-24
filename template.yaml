@@ -430,6 +430,8 @@ Resources:
           Properties:
             Path: /car/{vin}
             Method: delete
+            RequestParameters:
+              - method.request.header.Access-Control-Allow-Origin
 
   AddCarLambda:
     Type: AWS::Serverless::Function
@@ -450,6 +452,8 @@ Resources:
           Properties:
             Path: /car
             Method: post
+            RequestParameters:
+              - method.request.header.Access-Control-Allow-Origin
 
   UpdateCarLambda:
     Type: AWS::Serverless::Function
