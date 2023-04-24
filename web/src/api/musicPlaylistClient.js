@@ -202,7 +202,11 @@ export default class MusicPlaylistClient extends BindingClass {
 
         async deleteCar(vin, errorCallback) {
             try {
-                const response = await this.axiosClient.delete(`car/${vin}`);
+                const response = await this.axiosClient.delete(`car/${vin}`, {
+             headers: {
+                 Authorization: `Bearer ${token}`
+             }
+         });
                 console.log("response is");
                 console.log(response);
                 return response.data.car;
@@ -229,7 +233,11 @@ export default class MusicPlaylistClient extends BindingClass {
             capacity: capacity,
             year: year,
             costPerDay: costPerDay
-            });
+            }, {
+           headers: {
+               Authorization: `Bearer ${token}`
+           }
+       });
 
         return response.data.car;
     } catch (error) {
