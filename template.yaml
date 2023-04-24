@@ -34,7 +34,7 @@ Globals:
   Api:
     Cors:
       AllowMethods: "'GET,POST,PUT,DELETE,OPTIONS'"
-      AllowHeaders: "'content-type,authorization'"
+      AllowHeaders: "'content-type,authorization,Access-Control-Allow-Origin'"
       AllowOrigin: "'*'"
     Auth:
       DefaultAuthorizer: CognitoAuthorizer
