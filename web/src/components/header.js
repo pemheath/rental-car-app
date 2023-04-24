@@ -62,8 +62,8 @@ export default class Header extends BindingClass {
 
         siteTitle.appendChild(gifImage);
         siteTitle.appendChild(homeButton);
+        siteTitle.appendChild(gifImage);
         siteTitle.appendChild(gifImage2);
-
         return siteTitle;
     }
 
