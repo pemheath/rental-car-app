@@ -17,7 +17,7 @@ const EMPTY_DATASTORE_STATE = {
 class UpdateCar extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['mount', 'submit', 'displaySearchResults', 'getHTMLForSearchResults'], this);
+        this.bindClassMethods(['mount', 'viewCarFirst', 'submit', 'clientLoaded', 'displaySearchResults', 'getHTMLForSearchResults'], this);
         this.dataStore = new DataStore(EMPTY_DATASTORE_STATE);
         this.dataStore.addChangeListener(this.displaySearchResults);
         this.header = new Header(this.dataStore);
@@ -27,9 +27,61 @@ class UpdateCar extends BindingClass {
      * Add the header to the page and load the MusicPlaylistClient.
      */
     mount() {
+        document.getElementById('view-button').addEventListener('click', this.viewCarFirst);
         document.getElementById('update-button').addEventListener('click', this.submit);
         this.header.addHeaderToPage();
         this.client = new MusicPlaylistClient();
+        this.clientLoaded();
+    }
+
+    async clientLoaded() {
+         const urlParams = new URLSearchParams(window.location.search);
+         const vin = urlParams.get('vin');
+         console.log(vin);
+         if (vin) {
+         document.getElementById('car').classList.add('hidden');
+         const vinDisplayBox = document.createElement("div");
+         const vinDisplay = document.createElement("p");
+         document.getElementById('update-if-linked').innerText = "Update Car with VIN " + vin;
+         document.getElementById('car').appendChild(vinDisplayBox);
+         document.getElementById('car').appendChild(vinDisplay);
+
+         const car = await this.client.getCar(vin, (error) => {
+         errorMessageDisplay.innerText = `Error: ${error.message}`;
+         errorMessageDisplay.classList.remove('hidden');
+
+
+
+         });
+
+         this.dataStore.setState({
+             [SEARCH_RESULTS_KEY]: car,
+         });
+         document.getElementById('car-display-header').innerHTML = "Current Car";
+         }}
+
+    /**
+     * Display the car to update before user selects update information
+     */
+    async viewCarFirst() {
+
+        const errorMessageDisplay = document.getElementById('error-message');
+        errorMessageDisplay.innerText = ``;
+        errorMessageDisplay.classList.add('hidden');
+
+        const vin = document.getElementById('vin').value;
+
+        const car = await this.client.getCar(vin, (error) => {
+
+        errorMessageDisplay.innerText = `Error: ${error.message}`;
+        errorMessageDisplay.classList.remove('hidden');
+        });
+
+        this.dataStore.setState({
+            [SEARCH_RESULTS_KEY]: car,
+        });
+        document.getElementById('car-display-header').innerHTML = "Current Car";
+
     }
 
     /**
@@ -43,22 +95,27 @@ class UpdateCar extends BindingClass {
         errorMessageDisplay.innerText = ``;
         errorMessageDisplay.classList.add('hidden');
 
-        const vin = document.getElementById('vin').value;
-        const availability = document.getElementById('availability').value;
+        const urlParams = new URLSearchParams(window.location.search);
+        let vin = urlParams.get('vin');
+        if (!vin) {
+            vin = document.getElementById('vin').value;
+        }
 
-        const car = await this.client.updateCar(vin, availability, (error) => {
+
+        const availability = document.getElementById('availability').value;
+        const costPerDay = document.getElementById('cost-per-day').value;
+
+        const car = await this.client.updateCar(vin, availability, costPerDay, (error) => {
 
         errorMessageDisplay.innerText = `Error: ${error.message}`;
         errorMessageDisplay.classList.remove('hidden');
         });
 
-        console.log(car);
-
         this.dataStore.setState({
             [SEARCH_RESULTS_KEY]: car,
         });
+        document.getElementById('car-display-header').innerHTML = "Updated Car";
 
-        console.log(this.dataStore.get(SEARCH_RESULTS_KEY));
     }
 
     /**

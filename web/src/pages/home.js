@@ -149,6 +149,7 @@ class Home extends BindingClass {
     displaySearchResults() {
         const searchCriteria = this.dataStore.get(SEARCH_CRITERIA_KEY);
         const searchResults = this.dataStore.get(SEARCH_RESULTS_KEY);
+        console.log(searchResults);
 
         const searchResultsContainer = document.getElementById('search-results-container');
         const searchCriteriaDisplay = document.getElementById('search-criteria-display');
@@ -179,6 +180,7 @@ class Home extends BindingClass {
      * @returns A string of HTML suitable for being dropped on the page.
      */
     getHTMLForSearchResults(searchResults) {
+    console.log(searchResults);
         if (searchResults.length === 0) {
             return '<h4>No results found</h4>';
         }

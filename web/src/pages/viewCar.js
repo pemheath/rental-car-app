@@ -34,7 +34,6 @@ class ViewCar extends BindingClass {
         this.header = new Header(this.dataStore);
         console.log("viewCar constructor");
     }
-
     /**
      * Once the client is loaded, get the playlist metadata and song list.
      */
@@ -43,6 +42,7 @@ class ViewCar extends BindingClass {
 
      const urlParams = new URLSearchParams(window.location.search);
      const vin = urlParams.get('vin');
+     console.log(vin);
 
      if(vin){
          document.getElementById('car-name').innerText = "Loading Car ...";
@@ -52,11 +52,15 @@ class ViewCar extends BindingClass {
              [SEARCH_CRITERIA_KEY]: vin,
              [SEARCH_RESULTS_KEY]: car,
          });
-         document.getElementById('car-name').innerText = "CAR FOUND!";
+         document.getElementById('car-name').innerText = "CAR DETAILS";
+         const updateLink = document.createElement("a");
+         updateLink.innerText = "Update This Car";
+         updateLink.href = "updateCar.html?vin=" +vin;
+         document.getElementById('car-name').appendChild(updateLink);
+
+
      }
-
     }
-
     /**
      * Add the header to the page and load the MusicPlaylistClient.
      */
@@ -68,10 +72,6 @@ class ViewCar extends BindingClass {
         this.clientLoaded();
     }
 
-
-
-
-
     async getCar (){
 
         const errorMessageDisplay = document.getElementById('error-message');
@@ -81,6 +81,7 @@ class ViewCar extends BindingClass {
         const createButton = document.getElementById('view-car');
         const origButtonText = createButton.innerText;
         createButton.innerText = 'Loading...';
+        document.getElementById('car-name').innerText = "Loading Car ...";
 
 
         const vin = document.getElementById('vin-for-search').value;
@@ -110,8 +111,8 @@ class ViewCar extends BindingClass {
                 [SEARCH_CRITERIA_KEY]: vin,
                 [SEARCH_RESULTS_KEY]: carResult,
             });
-            document.getElementById('car-name').innerText = "Car Displayed Below";
-            console.log(dataStore.get(SEARCH_RESULTS_KEY));
+            document.getElementById('car-name').innerText = "Car Details ";
+
         }
     }
 
