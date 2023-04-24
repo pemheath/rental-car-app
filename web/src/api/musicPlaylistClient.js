@@ -238,12 +238,13 @@ export default class MusicPlaylistClient extends BindingClass {
 
     }
 
-        async updateCar(vin, availability, errorCallback) {
+        async updateCar(vin, availability, costPerDay, errorCallback) {
             try {
                 const token = await this.getTokenOrThrow("Only authenticated users can update cars.");
                 const response = await this.axiosClient.put(`car/${vin}`, {
                     vin: vin,
-                    availability: availability
+                    availability: availability,
+                    costPerDay: costPerDay
                 }, {
                     headers: {
                         Authorization: `Bearer ${token}`

@@ -9,12 +9,17 @@
 <body class="background">
     <header class="header" id="header"></header>
     <div class = "topnav" id="link-bar"></div>
+    <div class ="card" id = "car" >
+        <form class = "card-content" id = "vin-for-update">
+        <h2>Enter VIN for Car To Update</h2>
+        <label>VIN</label>
+        <input type="text" id="vin"><br><br>
+        <p class="hidden error" id="error-message"> </p>
+            <a href="#" class="button" id="view-button">Show Car</a><!--for when they are not an authenticated user-->
+        </form></div>
     <div class="card">
-        <h2>Manage Rentals</h2>
-        <form class="card-content" id="update-car-form">
-            <p class="hidden error" id="error-message"> </p> <!--for when they are not an authenticated user-->
-            <label>VIN to Check-In/Check-Out</label>
-            <input type="text" id="vin"><br><br>
+        <h2>Update Values</h2>
+        <form class="card-content" id="update-status-form">
             <label>Choose Status</label>
             <select name="cars" id="availability">
                 <option value = "AVAILABLE">Available</option>
@@ -22,11 +27,15 @@
                 <option value = "MAINTENANCE">Maintenance</option>
             </select><br><br>
         </form>
+        <form class="card-content" id="update-cost-form">
+            <label>Update Price</label>
+            <input type="number" name="cars" id="cost-per-day"><br><br>
+        </form>
         <a href="#" class="button" id="update-button">Update Car</a>
     </div>
 
     <div class="card hidden" id='search-results-container'>
-        <h3>Result for Updated Car</h3>
+        <h3 id = "car-display-header"> </h3>
         <div id="search-results-display">
         </div>
     </div>
