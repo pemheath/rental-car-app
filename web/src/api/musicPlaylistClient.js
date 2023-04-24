@@ -178,12 +178,11 @@ export default class MusicPlaylistClient extends BindingClass {
 
     }
 
-        /**
-         * Search for a car.
-         * @param VIN A string containing search VIN to pass to the API.
-         * @returns The car that matches the search criteria.
-         */
-
+    /**
+     * Search for a car.
+     * @param VIN A string containing search VIN to pass to the API.
+     * @returns The car that matches the search criteria.
+     */
     async getCar(vin, errorCallback) {
         try {
             const response = await this.axiosClient.get(`car/${vin}`);
@@ -194,75 +193,76 @@ export default class MusicPlaylistClient extends BindingClass {
             this.handleError(error, errorCallback)}
 
     }
-     /**
-             * delete a car.
-             * @param VIN A string containing search VIN to pass to the API.
-             * @returns The car that matches the search criteria.
-             */
 
-        async deleteCar(vin, errorCallback) {
-            try {
-                const response = await this.axiosClient.delete(`car/${vin}`, {
-             headers: {
-                 Authorization: `Bearer ${token}`
-             }
-         });
-                console.log("response is");
-                console.log(response);
-                return response.data.car;
-            } catch (error) {
-                this.handleError(error, errorCallback)}
+    /**
+     * delete a car.
+     * @param VIN A string containing search VIN to pass to the API.
+     * @returns The car that matches the search criteria.
+     */
+    async deleteCar(vin, errorCallback) {
+        try {
+            const token = await this.getTokenOrThrow("Only authenticated users can create a new car.");
+            const response = await this.axiosClient.delete(`car/${vin}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
 
+            console.log("response is");
+            console.log(response);
+
+            return response.data.car;
         }
+        catch (error) {
+            this.handleError(error, errorCallback)
+        }
+    }
 
-
-      /**
-             * Add a car.
-             * @param vin, class, make, model, capacity, year, costPerDay to pass to the API.
-             * @returns The new car.
-             */
-
+    /**
+     * Add a car.
+     * @param vin, class, make, model, capacity, year, costPerDay to pass to the API.
+     * @returns The new car.
+     */
     async addCar(vin, classOfVehicle, make, model, capacity, year, costPerDay, errorCallback) {
-    try {
-        const token = await this.getTokenOrThrow("Only authenticated users can create a new car.");
-        const response = await this.axiosClient.post(`car`, {
-            vin: vin,
-            classOfVehicle: classOfVehicle,
-            make: make,
-            model: model,
-            capacity: capacity,
-            year: year,
-            costPerDay: costPerDay
-            }, {
-           headers: {
-               Authorization: `Bearer ${token}`
-           }
-       });
-
-        return response.data.car;
-    } catch (error) {
-        this.handleError(error, errorCallback);
-    }
-
-    }
-
-        async updateCar(vin, availability, costPerDay, errorCallback) {
-            try {
-                const token = await this.getTokenOrThrow("Only authenticated users can update cars.");
-                const response = await this.axiosClient.put(`car/${vin}`, {
-                    vin: vin,
-                    availability: availability,
-                    costPerDay: costPerDay
+        try {
+            const token = await this.getTokenOrThrow("Only authenticated users can create a new car.");
+            const response = await this.axiosClient.post(`car`, {
+                vin: vin,
+                classOfVehicle: classOfVehicle,
+                make: make,
+                model: model,
+                capacity: capacity,
+                year: year,
+                costPerDay: costPerDay
                 }, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
-                return response.data.car;
-            } catch (error) {
-                this.handleError(error, errorCallback)
-            }
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            return response.data.car;
         }
+        catch (error) {
+           this.handleError(error, errorCallback);
+        }
+    }
+
+    async updateCar(vin, availability, costPerDay, errorCallback) {
+        try {
+            const token = await this.getTokenOrThrow("Only authenticated users can update cars.");
+            const response = await this.axiosClient.put(`car/${vin}`, {
+                vin: vin,
+                availability: availability,
+                costPerDay: costPerDay
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            return response.data.car;
+        } catch (error) {
+            this.handleError(error, errorCallback)
+        }
+    }
 
 
     /**
