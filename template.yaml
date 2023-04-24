@@ -34,7 +34,7 @@ Globals:
   Api:
     Cors:
       AllowMethods: "'GET,POST,PUT,DELETE,OPTIONS'"
-      AllowHeaders: "'content-type,authorization,Access-Control-Allow-Origin'"
+      AllowHeaders: "'content-type,authorization'"
       AllowOrigin: "'*'"
     Auth:
       DefaultAuthorizer: CognitoAuthorizer
@@ -430,8 +430,7 @@ Resources:
           Properties:
             Path: /car/{vin}
             Method: delete
-            RequestParameters:
-              - method.request.header.Access-Control-Allow-Origin
+            Cors: true
 
   AddCarLambda:
     Type: AWS::Serverless::Function
@@ -452,8 +451,7 @@ Resources:
           Properties:
             Path: /car
             Method: post
-            RequestParameters:
-              - method.request.header.Access-Control-Allow-Origin
+            Cors: true
 
   UpdateCarLambda:
     Type: AWS::Serverless::Function
