@@ -408,8 +408,8 @@ Resources:
           Properties:
             Path: /car/{vin}
             Method: get
-          Auth:
-            Authorizer: 'NONE'
+            Auth:
+              Authorizer: 'NONE'
 
   RemoveCarLambda:
     Type: AWS::Serverless::Function
