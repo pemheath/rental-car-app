@@ -36,6 +36,35 @@ export default class Header extends BindingClass {
 
     }
 
+//    createSiteTitle() {
+//      // Create the site title container div
+//      const siteTitle = document.createElement('div');
+//      siteTitle.classList.add('site-title');
+//
+//      // Create the left image element
+//      const leftImage = document.createElement('div');
+//      gifImage.classList.add('gif-image');
+//      gifImage.style.backgroundImage = 'url("https://media.giphy.com/media/bKa7IXHj65ywvTwnbx/giphy.gif")';
+//
+//      // Create the home button
+//      const homeButton = document.createElement('a');
+//      homeButton.classList.add('header_home');
+//      homeButton.href = 'index.html';
+//      homeButton.innerText = "Muddather's Car Rental Service";
+//
+//      // Create the right image element
+//      const rightImage = document.createElement('div');
+//      gifImage2.classList.add('gif-image');
+//      gifImage2.style.backgroundImage = 'url("https://media.giphy.com/media/bKa7IXHj65ywvTwnbx/giphy.gif")';
+//
+//      // Append the left and right images to the site title container
+//      siteTitle.appendChild(leftImage);
+//      siteTitle.appendChild(homeButton);
+//      siteTitle.appendChild(rightImage);
+//
+//      return siteTitle;
+//    }
+
 
     createSiteTitle() {
         // Create the site title container div
@@ -43,17 +72,13 @@ export default class Header extends BindingClass {
         siteTitle.classList.add('site-title');
         // Create the GIF image element #1
           const gifImage = document.createElement('img');
-            gifImage.src = 'https://media.giphy.com/media/bKa7IXHj65ywvTwnbx/giphy.gif';
-            gifImage.classList.add('gif-image');
+           gifImage.src = 'https://media.giphy.com/media/bKa7IXHj65ywvTwnbx/giphy.gif';
+           gifImage.classList.add('gif-image');
+
             // Create the GIF image element #2
-            const gifImage2 = document.createElement('img');
-            gifImage2.src = 'https://media.giphy.com/media/bKa7IXHj65ywvTwnbx/giphy.gif';
-            gifImage2.classList.add('gif-image');
-
-            //style the GIF images
-            gifImage.style.float = 'left';
-
-
+        const gifImage2 = document.createElement('img');
+           gifImage2.src = 'https://media.giphy.com/media/bKa7IXHj65ywvTwnbx/giphy.gif';
+           gifImage2.classList.add('gif-image');
          // Create the home button
         const homeButton = document.createElement('a');
         homeButton.classList.add('header_home');
@@ -62,7 +87,6 @@ export default class Header extends BindingClass {
 
         siteTitle.appendChild(gifImage);
         siteTitle.appendChild(homeButton);
-        siteTitle.appendChild(gifImage);
         siteTitle.appendChild(gifImage2);
         return siteTitle;
     }

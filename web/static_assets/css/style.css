@@ -3,12 +3,14 @@
     --primary-color: #008b8b;
     --secondary-color: #ffffff;
     --tertiary-color: #4682b4;
+    --background-color: #404245;
     --box-color: 	#000000;
     --error-color: #EE3A23;
+    --button-color: #08a1a1;
 }
 
 .background {
-    background-color: #8A8C8F;
+    background-color: var(--background-color);
     margin: 0;
     counter-reset: section;
     font-family: "Helvetica Neue",Helvetica,sans-serif;
@@ -25,10 +27,6 @@
     padding: 4px 20px;
     justify-content: center;
 }
-.gif-image {
-  width: 90px;
-  height: 90px;
-}
 
 .button {
   background-color: var(--tertiary-color);
@@ -44,10 +42,14 @@
 .button-group {
     display: flex;
     justify-content: space-between;
+
 }
 
 .header_home {
-    font-size: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 35px;
     line-height: 36px;
     height: 100px;
     text-decoration: none;
@@ -83,6 +85,27 @@
   width: 100px;
   height: 100px;
   font-family: "Impact", fantasy;
+}
+
+.gif-image {
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 90%;
+}
+
+.site-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80px;
+  background-color: transparent;
+}
+
+.user {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 20px;
 }
 
 .card-content .form-field {
@@ -126,11 +149,13 @@
 /* Style the links inside the navigation bar */
 .topnav a {
   float: left;
-  color: #f2f2f2;
+  color: #08a1a1;
   text-align: center;
   padding: 10px 15px 9px;
   text-decoration: none;
   font-size: 17px;
+  font-weight: bold;
+
 }
 
 /* Change the color of links on hover */
@@ -142,7 +167,7 @@
 /* Add a color to the active/current link */
 .topnav a.active {
   background-color: #04AA6D;
-  color: white;
+  color: #08a1a1;
 }
 
 /*
