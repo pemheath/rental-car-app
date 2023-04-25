@@ -7,11 +7,14 @@ import com.nashss.se.rentalcarservice.converters.ModelConverter;
 import com.nashss.se.rentalcarservice.dynamodb.CarDao;
 import com.nashss.se.rentalcarservice.dynamodb.models.Car;
 import com.nashss.se.rentalcarservice.exceptions.InvalidAttributeValueException;
+import com.nashss.se.rentalcarservice.exceptions.InvalidAttributesException;
 import com.nashss.se.rentalcarservice.models.CarModel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.inject.Inject;
+
+import static java.util.Objects.isNull;
 
 public class AddCarActivity {
 
@@ -40,6 +43,12 @@ public class AddCarActivity {
         if (!MusicPlaylistServiceUtils.isValidString(addCarRequest.getYear())) {
             throw new InvalidAttributeValueException("Car year [" + addCarRequest.getYear() +
                     "] contains illegal characters");
+        }
+        // check to see if the car already exists
+
+        if(!isNull(carDao.getCar(addCarRequest.getVIN()))) {
+            throw new InvalidAttributesException("Car with with VIN [" + addCarRequest.getVIN() + "] " +
+                    "already exists. You can update this car on the update car page.");
         }
 
         Car newCar = new Car();
