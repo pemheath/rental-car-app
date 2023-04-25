@@ -201,7 +201,9 @@ export default class MusicPlaylistClient extends BindingClass {
      */
     async deleteCar(vin, errorCallback) {
         try {
-            const token = await this.getTokenOrThrow("Only authenticated users can create a new car.");
+
+            const token = await this.getTokenOrThrow("Only authenticated users can delete a car.");
+
             const response = await this.axiosClient.delete(`car/${vin}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
