@@ -6,6 +6,7 @@ import com.nashss.se.rentalcarservice.activity.results.AddCarResult;
 import com.nashss.se.rentalcarservice.converters.ModelConverter;
 import com.nashss.se.rentalcarservice.dynamodb.CarDao;
 import com.nashss.se.rentalcarservice.dynamodb.models.Car;
+import com.nashss.se.rentalcarservice.exceptions.CarNotFoundException;
 import com.nashss.se.rentalcarservice.exceptions.InvalidAttributeValueException;
 import com.nashss.se.rentalcarservice.exceptions.InvalidAttributesException;
 import com.nashss.se.rentalcarservice.models.CarModel;
@@ -46,26 +47,32 @@ public class AddCarActivity {
         }
         // check to see if the car already exists
 
-        if(!isNull(carDao.getCar(addCarRequest.getVIN()))) {
-            throw new InvalidAttributesException("Car with with VIN [" + addCarRequest.getVIN() + "] " +
-                    "already exists. You can update this car on the update car page.");
+        try {
+            carDao.getCar(addCarRequest.getVIN());
+                throw new InvalidAttributesException("You attemdpted to add a car that already exists, VIN [" + addCarRequest.getVIN() + "] " +
+                        "exists in database");
+
+            }
+         catch (CarNotFoundException e) {
+            Car newCar = new Car();
+            newCar.setVIN(addCarRequest.getVIN());
+            newCar.setMake(addCarRequest.getMake());
+            newCar.setModel(addCarRequest.getModel());
+            newCar.setClassOfVehicle(addCarRequest.getClassOfVehicle());
+            newCar.setCostPerDay(addCarRequest.getCostPerDay());
+            newCar.setAvailability(addCarRequest.getAvailability());
+            newCar.setYear(addCarRequest.getYear());
+            newCar.setCapacity(addCarRequest.getCapacity());
+
+            carDao.saveCar(newCar);
+
+            CarModel carModel = new ModelConverter().toCarModel(newCar);
+            return AddCarResult.builder()
+                    .withCar(carModel)
+                    .build();
+
         }
 
-        Car newCar = new Car();
-        newCar.setVIN(addCarRequest.getVIN());
-        newCar.setMake(addCarRequest.getMake());
-        newCar.setModel(addCarRequest.getModel());
-        newCar.setClassOfVehicle(addCarRequest.getClassOfVehicle());
-        newCar.setCostPerDay(addCarRequest.getCostPerDay());
-        newCar.setAvailability(addCarRequest.getAvailability());
-        newCar.setYear(addCarRequest.getYear());
-        newCar.setCapacity(addCarRequest.getCapacity());
 
-        carDao.saveCar(newCar);
-
-        CarModel carModel = new ModelConverter().toCarModel(newCar);
-        return AddCarResult.builder()
-                .withCar(carModel)
-                .build();
     }
 }

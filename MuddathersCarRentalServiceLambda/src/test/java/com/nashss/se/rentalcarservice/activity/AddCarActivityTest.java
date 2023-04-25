@@ -4,6 +4,7 @@ import com.nashss.se.rentalcarservice.activity.requests.AddCarRequest;
 import com.nashss.se.rentalcarservice.activity.results.AddCarResult;
 import com.nashss.se.rentalcarservice.dynamodb.CarDao;
 import com.nashss.se.rentalcarservice.dynamodb.models.Car;
+import com.nashss.se.rentalcarservice.exceptions.CarNotFoundException;
 import com.nashss.se.rentalcarservice.exceptions.InvalidAttributesException;
 import com.nashss.se.rentalcarservice.metrics.MetricsPublisher;
 import com.nashss.se.rentalcarservice.models.AvailabilityEnum;
