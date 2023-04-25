@@ -163,7 +163,7 @@ class Home extends BindingClass {
 
         else if (searchCriteria.includes('none')) {
             searchResultsContainer.classList.remove('hidden');
-            searchCriteriaDisplay.innerHTML = 'All Available Inventory';
+            searchCriteriaDisplay.innerHTML = 'SEARCH';
             searchResultsDisplay.innerHTML = this.getHTMLForSearchResults(searchResults);
         }
 
