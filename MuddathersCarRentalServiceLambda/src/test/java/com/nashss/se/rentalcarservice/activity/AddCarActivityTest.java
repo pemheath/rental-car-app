@@ -37,7 +37,7 @@ class AddCarActivityTest {
     @Test
     public void handleRequest_newCarInfoProvided_returnsNewlyUpdatedCar() {
         //GIVEN
-        String vin = "123456";
+        String vin = "123488856";
         String make = "Honda";
         String model = "Civic";
         CarClassEnum classOfVehicle = CarClassEnum.SEDAN;
@@ -65,8 +65,6 @@ class AddCarActivityTest {
                 .withYear(year)
                 .withCapacity(capacity)
                 .build();
-
-        when(carDao.getCar(vin)).thenReturn(null);
         when(carDao.saveCar(car)).thenReturn(car);
 
         // WHEN
@@ -81,45 +79,4 @@ class AddCarActivityTest {
         assertEquals(classOfVehicle, result.getCar().getClassOfVehicle());
 
     }
-
-    @Test
-    public void handleRequest_vinAlreadyExists_throwsException() {
-        //GIVEN
-        String vin = "123456";
-        String make = "Honda";
-        String model = "Civic";
-        CarClassEnum classOfVehicle = CarClassEnum.SEDAN;
-        BigDecimal costPerDay = new BigDecimal(100);
-        String year = "2020";
-        Integer capacity = 5;
-
-        Car car = new Car ();
-        car.setVIN(vin);
-        car.setMake(make);
-        car.setModel(model);
-        car.setCapacity(capacity);
-        car.setYear(year);
-        car.setCostPerDay(costPerDay);
-        car.setClassOfVehicle(classOfVehicle);
-        car.setAvailability(AvailabilityEnum.AVAILABLE);
-
-
-        AddCarRequest request = AddCarRequest.builder()
-                .withVIN(vin)
-                .withMake(make)
-                .withModel(model)
-                .withClassOfVehicle(classOfVehicle)
-                .withCostPerDay(costPerDay)
-                .withYear(year)
-                .withCapacity(capacity)
-                .build();
-
-        when(carDao.getCar(vin)).thenReturn(car);
-
-        // WHEN / THEN
-
-        assertThrows(InvalidAttributesException.class, () -> addCarActivity.handleRequest(request));
-
-    }
-
 }

@@ -45,15 +45,7 @@ public class AddCarActivity {
             throw new InvalidAttributeValueException("Car year [" + addCarRequest.getYear() +
                     "] contains illegal characters");
         }
-        // check to see if the car already exists
 
-        try {
-            carDao.getCar(addCarRequest.getVIN());
-                throw new InvalidAttributesException("You attemdpted to add a car that already exists, VIN [" + addCarRequest.getVIN() + "] " +
-                        "exists in database");
-
-            }
-         catch (CarNotFoundException e) {
             Car newCar = new Car();
             newCar.setVIN(addCarRequest.getVIN());
             newCar.setMake(addCarRequest.getMake());
@@ -71,8 +63,6 @@ public class AddCarActivity {
                     .withCar(carModel)
                     .build();
 
+
         }
-
-
-    }
 }
