@@ -3,19 +3,19 @@ import BindingClass from "../util/bindingClass";
 import Authenticator from "./authenticator";
 
 /**
- * Client to call the MusicPlaylistService.
+ * Client to call the RentalCarService.
  *
  * This could be a great place to explore Mixins. Currently the client is being loaded multiple times on each page,
  * which we could avoid using inheritance or Mixins.
  * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes#Mix-ins
  * https://javascript.info/mixins
   */
-export default class MusicPlaylistClient extends BindingClass {
+export default class RentalCarServiceClient extends BindingClass {
 
     constructor(props = {}) {
         super();
 
-        const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'getPlaylist', 'getPlaylistSongs', 'createPlaylist', 'search', 'getCar','deleteCar', 'addCar'];
+        const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'search', 'getCar','deleteCar', 'addCar'];
 
         this.bindClassMethods(methodsToBind, this);
 
@@ -64,6 +64,12 @@ export default class MusicPlaylistClient extends BindingClass {
         this.authenticator.logout();
     }
 
+        /**
+         * Get the identity of the current user
+         * @param errorCallback (Optional) A function to execute if the call fails.
+         * @returns The user information for the current user.
+         */
+
     async getTokenOrThrow(unauthenticatedErrorMessage) {
         const isLoggedIn = await this.authenticator.isUserLoggedIn();
         if (!isLoggedIn) {
@@ -73,84 +79,6 @@ export default class MusicPlaylistClient extends BindingClass {
         return await this.authenticator.getUserToken();
     }
 
-    /**
-     * Gets the playlist for the given ID.
-     * @param id Unique identifier for a playlist
-     * @param errorCallback (Optional) A function to execute if the call fails.
-     * @returns The playlist's metadata.
-     */
-    async getPlaylist(id, errorCallback) {
-        try {
-            const response = await this.axiosClient.get(`playlists/${id}`);
-            return response.data.playlist;
-        } catch (error) {
-            this.handleError(error, errorCallback)
-        }
-    }
-
-    /**
-     * Get the songs on a given playlist by the playlist's identifier.
-     * @param id Unique identifier for a playlist
-     * @param errorCallback (Optional) A function to execute if the call fails.
-     * @returns The list of songs on a playlist.
-     */
-    async getPlaylistSongs(id, errorCallback) {
-        try {
-            const response = await this.axiosClient.get(`playlists/${id}/songs`);
-            return response.data.songList;
-        } catch (error) {
-            this.handleError(error, errorCallback)
-        }
-    }
-
-    /**
-     * Create a new playlist owned by the current user.
-     * @param name The name of the playlist to create.
-     * @param tags Metadata tags to associate with a playlist.
-     * @param errorCallback (Optional) A function to execute if the call fails.
-     * @returns The playlist that has been created.
-     */
-    async createPlaylist(name, tags, errorCallback) {
-        try {
-                     const token = await this.getTokenOrThrow("Only authenticated users can create playlists.");
-                     const response = await this.axiosClient.post(`playlists`, {
-                         name: name,
-                         tags: tags
-                     }, {
-                         headers: {
-                             Authorization: `Bearer ${token}`
-                         }
-                     });
-                     return response.data.playlist;
-                 } catch (error) {
-                     this.handleError(error, errorCallback)
-                 }
-    }
-
-    /**
-     * Add a song to a playlist.
-     * @param id The id of the playlist to add a song to.
-     * @param asin The asin that uniquely identifies the album.
-     * @param trackNumber The track number of the song on the album.
-     * @returns The list of songs on a playlist.
-     */
-    async addSongToPlaylist(id, asin, trackNumber, errorCallback) {
-        try {
-            const token = await this.getTokenOrThrow("Only authenticated users can add a song to a playlist.");
-            const response = await this.axiosClient.post(`playlists/${id}/songs`, {
-                id: id,
-                asin: asin,
-                trackNumber: trackNumber
-            }, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
-            return response.data.songList;
-        } catch (error) {
-            this.handleError(error, errorCallback)
-        }
-    }
 
     /**
      * Search for a list of cars based on available criteria.
@@ -193,9 +121,8 @@ export default class MusicPlaylistClient extends BindingClass {
             this.handleError(error, errorCallback)}
 
     }
-
     /**
-     * delete a car.
+     * Delete a car.
      * @param VIN A string containing search VIN to pass to the API.
      * @returns The car that matches the search criteria.
      */
@@ -209,10 +136,6 @@ export default class MusicPlaylistClient extends BindingClass {
                     Authorization: `Bearer ${token}`
                 }
             });
-
-            console.log("response is");
-            console.log(response);
-
             return response.data.car;
         }
         catch (error) {
@@ -247,6 +170,12 @@ export default class MusicPlaylistClient extends BindingClass {
            this.handleError(error, errorCallback);
         }
     }
+
+        /**
+         * Update a car.
+         * @param vin, availability, costPerDay, errorCallback
+         * @returns The new car.
+         */
 
     async updateCar(vin, availability, costPerDay, errorCallback) {
         try {

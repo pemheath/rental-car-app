@@ -1,4 +1,4 @@
-import MusicPlaylistClient from '../api/musicPlaylistClient';
+import RentalCarServiceClient from '../api/rentalCarServiceClient';
 import Header from '../components/header';
 import BindingClass from "../util/bindingClass";
 import DataStore from "../util/DataStore";
@@ -62,13 +62,13 @@ class ViewCar extends BindingClass {
      }
     }
     /**
-     * Add the header to the page and load the MusicPlaylistClient.
+     * Add the header to the page and load the RentalCarServiceClient.
      */
     mount() {
 
         document.getElementById('view-car').addEventListener('click', this.getCar);
         this.header.addHeaderToPage();
-        this.client = new MusicPlaylistClient();
+        this.client = new RentalCarServiceClient();
         this.clientLoaded();
     }
 

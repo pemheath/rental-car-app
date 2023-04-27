@@ -1,4 +1,4 @@
-import MusicPlaylistClient from '../api/musicPlaylistClient';
+import RentalCarServiceClient from '../api/rentalCarServiceClient';
 import Header from '../components/header';
 import BindingClass from '../util/bindingClass';
 import DataStore from '../util/DataStore';
@@ -16,7 +16,7 @@ class ManageInventory extends BindingClass {
         }
 
         /**
-             * Add the header to the page and load the MusicPlaylistClient.
+             * Add the header to the page and load the RentalCarServiceClient.
              */
 
            mount() {
@@ -24,11 +24,11 @@ class ManageInventory extends BindingClass {
 
                this.header.addHeaderToPage();
 
-               this.client = new MusicPlaylistClient();
+               this.client = new RentalCarServiceClient();
            }
 
            /**
-            * Method to run when the add car submit button is pressed. Call the MusicPlaylistService to create the
+            * Method to run when the add car submit button is pressed. Call the RentalCarSerivceClient to create the
             * new car.
             */
              async submit(evt) {

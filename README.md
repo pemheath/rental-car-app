@@ -76,7 +76,7 @@ Let’s look at one piece - adding the header to our page. This requires the ful
 
 Two important things to call out:
 
-1. To call our backend we are always going through our `MusicPlaylistClient`.
+1. To call our backend we are always going through our `RentalCarServiceClient`.
 2. The `DataStore` uses a different pattern than we’ve seen previously. It has two member variables - the state, which is a JavaScript object that should hold all of the data being used across a webpage, and a list of listeners. The listeners are methods in other objects. Anytime `set` or `setState` is called it loops through all of those methods and executes each one. So in each of those listeners the first thing we do is check to see if the data that they rely on is null. Then, if it’s not null, we update the html to reflect the new data. You can take a look at the `addPlaylistToPage()` method in `viewPlaylist.js` for an example of this.
 
 ## Project Setup

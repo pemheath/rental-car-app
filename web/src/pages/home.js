@@ -1,4 +1,4 @@
-import MusicPlaylistClient from '../api/musicPlaylistClient';
+import RentalCarServiceClient from '../api/rentalCarServiceClient';
 import Header from '../components/header';
 import BindingClass from "../util/bindingClass";
 import DataStore from "../util/DataStore";
@@ -75,7 +75,7 @@ class Home extends BindingClass {
         }
 
     /**
-     * Add the header to the page and load the MusicPlaylistClient.
+     * Add the header to the page and load the RentalCarServiceClient.
      */
     mount() {
         // Wire up the form's 'submit' event and the button's 'click' event to the search method.
@@ -85,7 +85,7 @@ class Home extends BindingClass {
         this.header.addHeaderToPage();
         console.log("added header");
 
-        this.client = new MusicPlaylistClient();
+        this.client = new RentalCarServiceClient();
         console.log("loaded client");
     }
 

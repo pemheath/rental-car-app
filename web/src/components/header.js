@@ -1,4 +1,4 @@
-import MusicPlaylistClient from '../api/musicPlaylistClient';
+import RentalCarServiceClient from '../api/rentalCarServiceClient';
 import BindingClass from "../util/bindingClass";
 
 /**
@@ -14,8 +14,7 @@ export default class Header extends BindingClass {
         ];
         this.bindClassMethods(methodsToBind, this);
 
-        this.client = new MusicPlaylistClient();
-        console.log("client has been constructed, header constructor complete");
+        this.client = new RentalCarServiceClient();
     }
 
     /**

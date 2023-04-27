@@ -1,4 +1,4 @@
-import MusicPlaylistClient from '../api/musicPlaylistClient';
+import RentalCarServiceClient from '../api/rentalCarServiceClient';
 import Header from '../components/header';
 import BindingClass from '../util/bindingClass';
 import DataStore from '../util/DataStore';
@@ -24,13 +24,13 @@ class RemoveCar extends BindingClass {
 
 
     /**
-     * Add the header to the page and load the MusicPlaylistClient.
+     * Add the header to the page and load the RentalCarServiceClient
      */
     mount() {
         document.getElementById("remove").addEventListener('click',this.removeCar);
        // document.getElementById('view-car').addEventListener('click', this.getCar);
 
-        this.client = new MusicPlaylistClient();
+        this.client = new RentalCarServiceClient();
 
     }
 

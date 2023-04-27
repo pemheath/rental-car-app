@@ -1,4 +1,4 @@
-import MusicPlaylistClient from '../api/musicPlaylistClient';
+import RentalCarServiceClient from '../api/rentalCarServiceClient';
 import Header from '../components/header';
 import BindingClass from '../util/bindingClass';
 import DataStore from '../util/DataStore';
@@ -24,20 +24,19 @@ class UpdateCar extends BindingClass {
     }
 
     /**
-     * Add the header to the page and load the MusicPlaylistClient.
+     * Add the header to the page and load the RentalCarServiceClient
      */
     mount() {
         document.getElementById('view-button').addEventListener('click', this.viewCarFirst);
         document.getElementById('update-button').addEventListener('click', this.submit);
         this.header.addHeaderToPage();
-        this.client = new MusicPlaylistClient();
+        this.client = new RentalCarServiceClient();
         this.clientLoaded();
     }
 
     async clientLoaded() {
          const urlParams = new URLSearchParams(window.location.search);
          const vin = urlParams.get('vin');
-         console.log(vin);
          if (vin) {
          document.getElementById('car').classList.add('hidden');
          const vinDisplayBox = document.createElement("div");
@@ -85,8 +84,8 @@ class UpdateCar extends BindingClass {
     }
 
     /**
-     * Method to run when the create playlist submit button is pressed. Call the MusicPlaylistService to create the
-     * playlist.
+     * Method to run when the create playlist submit button is pressed. Call the RentalCarServiceClient to update the
+     * car.
      */
     async submit(evt) {
         evt.preventDefault();
